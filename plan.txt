@@ -1,0 +1,22 @@
+DISPLAY FUNCTIONS
+	- clear frame buffer
+	- horizontal split screen
+	- print string (with wraparound)
+	- behavior when receive is full (scroll or reset)
+
+INPUT DISPLAY
+	- text-editing with backspace, arrow keys, return
+	- clear when message sent
+	- display cursor
+
+KEYBOARD INPUT
+	- convert from USB keycodes to ASCII
+	- make shift keys work
+	- left/right arrow keys
+	- backspace
+	- *multi-key commands
+
+NETWORKING
+	- display messages upon receives new packets
+	- send message when user presses enter
+	- display sent message
