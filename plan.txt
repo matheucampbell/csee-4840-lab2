@@ -20,3 +20,5 @@ NETWORKING
 	- display messages upon receives new packets
 	- send message when user presses enter
 	- display sent message
+
+testmessage from pw
