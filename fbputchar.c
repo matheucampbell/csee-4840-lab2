@@ -109,7 +109,7 @@ void fbputchar(char c, int row, int col, int red, int gre, int blu)
 void fbputs(const char *s, int row, int col)
 {
   char c;
-  while ((c = *s++) != 0) fbputchar(c, row, col++);
+  while ((c = *s++) != 0) fbputchar(c, row, col++, 255, 255, 255);
 }
 
 // Clear screen *

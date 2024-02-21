@@ -39,6 +39,7 @@ uint8_t endpoint_address;
 
 pthread_t network_thread;
 void *network_thread_f(void *);
+char *key_trans(char *keyid);
 
 int main()
 {
@@ -60,9 +61,9 @@ int main()
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
-    fbputchar('*', 0, col);
-    fbputchar('*', 23, col);
-    fbputchar('-', 20, col);	// Devided line *
+    fbputchar('*', 0, col, 255, 255, 255);
+    fbputchar('*', 23, col, 255, 255, 255);
+    fbputchar('-', 20, col, 255, 255, 255);	// Devided line *
   }
 
   fbputs("Hello CSEE 4840 World!", 4, 10);
@@ -138,13 +139,13 @@ void *network_thread_f(void *ignored)
   return NULL;
 }
 
-char *key_trans(char * keyid)
+char *key_trans(char *keyid)
 {
 	char *symbol;
 	int num[3]; 
 	int i = 0;
 
-	char * token = strtok(string, " ");
+	char *token = strtok(keyid, " ");
 	while (token != NULL) {
 		num[i] = (int)strtol(token, NULL, 16);
 		token = strtok(NULL, " ");
