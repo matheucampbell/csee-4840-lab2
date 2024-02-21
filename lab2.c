@@ -49,16 +49,20 @@ int main()
   struct usb_keyboard_packet packet;
   int transferred;
   char keystate[12];
+	char *keyvalue;
 
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
     exit(1);
   }
+	
+	fbclear();
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
     fbputchar('*', 0, col);
     fbputchar('*', 23, col);
+    fbputchar('-', 20, col);	// Devided line *
   }
 
   fbputs("Hello CSEE 4840 World!", 4, 10);
@@ -101,8 +105,10 @@ int main()
     if (transferred == sizeof(packet)) {
       sprintf(keystate, "%02x %02x %02x", packet.modifiers, packet.keycode[0],
 	      packet.keycode[1]);
+			keyvalue = key_trans(keystate);
       printf("%s\n", keystate);
-      fbputs(keystate, 6, 0);
+      fbputs(keystate, 21, 0);
+      fbputs(keyvalue, 22, 0);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
@@ -132,3 +138,21 @@ void *network_thread_f(void *ignored)
   return NULL;
 }
 
+char *key_trans(char * keyid)
+{
+	char *symbol;
+	int num[3]; 
+	int i = 0;
+
+	char * token = strtok(string, " ");
+	while (token != NULL) {
+		num[i] = (int)strtol(token, NULL, 16);
+		token = strtok(NULL, " ");
+		i++;
+	}
+	num[1] += 93;
+	if (num[1] > 92 || num[1] <123) {
+		symbol = num[1];
+	}
+	return symbol;
+} 

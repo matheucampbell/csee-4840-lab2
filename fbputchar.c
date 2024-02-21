@@ -59,7 +59,7 @@ int fbopen()
  * Draw the given character at the given row/column.
  * fbopen() must be called first.
  */
-void fbputchar(char c, int row, int col)
+void fbputchar(char c, int row, int col, int red, int gre, int blu)
 {
   int x, y;
   unsigned char pixels, *pixelp = font + FONT_HEIGHT * c;
@@ -73,24 +73,24 @@ void fbputchar(char c, int row, int col)
     mask = 0x80;
     for (x = 0 ; x < FONT_WIDTH ; x++) {
       if (pixels & mask) {	
-	pixel[0] = 255; /* Red */
-        pixel[1] = 255; /* Green */
-        pixel[2] = 255; /* Blue */
+			  pixel[0] = red;	//255; /* Red */
+        pixel[1] = gre;	//255; /* Green */
+        pixel[2] = blu;	//255; /* Blue */
         pixel[3] = 0;
       } else {
-	pixel[0] = 0;
+		  pixel[0] = 0;
         pixel[1] = 0;
         pixel[2] = 0;
         pixel[3] = 0;
       }
       pixel += 4;
       if (pixels & mask) {
-	pixel[0] = 255; /* Red */
-        pixel[1] = 255; /* Green */
-        pixel[2] = 255; /* Blue */
+		  	pixel[0] = red;	//255; /* Red */
+        pixel[1] = gre;	//255; /* Green */
+        pixel[2] = blu;	//255; /* Blue */
         pixel[3] = 0;
       } else {
-	pixel[0] = 0;
+		  	pixel[0] = 0;
         pixel[1] = 0;
         pixel[2] = 0;
         pixel[3] = 0;
@@ -111,6 +111,18 @@ void fbputs(const char *s, int row, int col)
   char c;
   while ((c = *s++) != 0) fbputchar(c, row, col++);
 }
+
+// Clear screen *
+void fbclear()
+{
+	int row, col;
+	for (row = 0; row < 24; row++) {
+		for (col = 0; col < 64; col++) {
+			fbputchar(' ', row, col, 0, 0, 0);
+		}
+	}
+}
+
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
 
