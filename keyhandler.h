@@ -12,7 +12,7 @@
 #define TYPE_ROW_MIN 18
 
 void update_position(int, int, int*, int*);
-void parse_letters(int, int, char**, int*, int*);
+void parse_letters(int, int, char*, int*, int*);
 
 #endif
 

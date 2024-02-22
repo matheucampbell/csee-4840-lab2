@@ -48,7 +48,7 @@ int main()
   int transferred;
   char keystate[12];
 
-  char** textbuf = (char**) malloc(64 * sizeof(char*));
+  char* textbuf = (char*) malloc(64 * sizeof(char));
   
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);

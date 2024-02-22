@@ -14,17 +14,17 @@ void update_position(int keycode, int mods, int* x, int* y){
 }
 
 // Updates text buffer upon receiving text, then moves cursor
-void parse_letters(int keycode, int mods, char** buf, int* x, int* y){
+void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = *x;
 	char c;
 	
 	if ((keycode | mods) == 0)
 		return;
 
-	if (0x00 <= keycode  && keycode <= 0x1c){
+	if (0x00 <= keycode && keycode <= 0x1c){
 		c = keycode + 93;
-		printf("%c received. Cursor at %d\n", c, bufpos);
-		// *buf[bufpos] = c;
+		printf("%c received. Cursor at %d.\n", c, bufpos);
+		buf[bufpos] = c;
 	}
 	
 	update_position(RIGHT_ARROW, mods, x, y);
