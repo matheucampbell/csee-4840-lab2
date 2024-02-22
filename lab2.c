@@ -22,7 +22,8 @@
 #define SERVER_PORT 42000
 
 #define BUFFER_SIZE 128
-
+#define COL_NUM 64
+#define ROW_NUM 24
 /*
  * References:
  *
@@ -39,7 +40,7 @@ uint8_t endpoint_address;
 
 pthread_t network_thread;
 void *network_thread_f(void *);
-char *key_trans(char *keyid);
+char key_trans(char *keyid);
 
 int main()
 {
@@ -50,14 +51,14 @@ int main()
   struct usb_keyboard_packet packet;
   int transferred;
   char keystate[12];
-	char *keyvalue;
+	char keyvalue;
 
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
     exit(1);
   }
 	
-	fbclear();
+	fbclear();	// Clear screen
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
@@ -66,7 +67,7 @@ int main()
     fbputchar('-', 20, col, 255, 255, 255);	// Devided line *
   }
 
-  fbputs("Hello CSEE 4840 World!", 4, 10);
+  //fbputs("Hello CSEE 4840 World!", 4, 10);
 
   /* Open the keyboard */
   if ( (keyboard = openkeyboard(&endpoint_address)) == NULL ) {
@@ -109,7 +110,7 @@ int main()
 			keyvalue = key_trans(keystate);
       printf("%s\n", keystate);
       fbputs(keystate, 21, 0);
-      fbputs(keyvalue, 22, 0);
+      fbputchar(keyvalue, 22, 0, 255, 255, 255);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
@@ -129,19 +130,30 @@ void *network_thread_f(void *ignored)
 {
   char recvBuf[BUFFER_SIZE];
   int n;
+	int i, rows;
+	rows = 1;
+	char outStr[COL_NUM + 1];
   /* Receive data */
   while ( (n = read(sockfd, &recvBuf, BUFFER_SIZE - 1)) > 0 ) {
     recvBuf[n] = '\0';
     printf("%s", recvBuf);
-    fbputs(recvBuf, 8, 0);
+		while (strlen(recvBuf) > 64) {
+			i = COL_NUM;
+			do i--;
+			while (recvBuf[i] != ' ');
+			strncpy(outStr, recvBuf, i);
+			fbputs(outStr, rows, 0);
+			strcpy(recvBuf, recvBuf + i + 1);
+			rows++;
+		}
+		fbputs(recvBuf, rows, 0);
   }
-
   return NULL;
 }
 
-char *key_trans(char *keyid)
+char key_trans(char *keyid)
 {
-	char *symbol;
+	char symbol;
 	int num[3]; 
 	int i = 0;
 
@@ -152,8 +164,10 @@ char *key_trans(char *keyid)
 		i++;
 	}
 	num[1] += 93;
-	if (num[1] > 92 || num[1] <123) {
-		symbol = num[1];
+	if (num[1] > 92 && num[1] <123) {
+		symbol = (char)num[1];
+	} else {
+		symbol = 'x';
 	}
 	return symbol;
-} 
+}
