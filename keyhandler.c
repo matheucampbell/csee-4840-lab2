@@ -32,8 +32,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(pp+1, pp);
 		buf[bufpos] = c;
 		update_position(RIGHT_ARROW, mods, buf, x, y);
-	}
-	
+	}	
 }
 
 // Checks for backspace and enter

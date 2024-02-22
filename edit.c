@@ -48,6 +48,7 @@ int main()
   char keystate[12];
 
   char* textbuf = (char*) malloc(64 * sizeof(char));
+  textbuf[0] = '\0';
   
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
@@ -101,13 +102,17 @@ int main()
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
-	  // Null terminate text buffer and print to screen
-	  fbputs(textbuf, TYPE_ROW_MIN, 0);
-
 	  // Render cursor
       if (curx != lastx || cury != lasty){
-		fbputchar(cursor, cury, curx);
+		fbputchar(' ', lasty, lastx);
 	  }
+
+	  fbputs(textbuf, TYPE_ROW_MIN, 0);
+	  
+	  if (curx != lastx || cury != lasty){
+	  	fbputchar(cursor, cury, curx);
+	  }
+
 	}
   }
 
