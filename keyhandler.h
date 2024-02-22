@@ -7,7 +7,7 @@
 #define UP_ARROW 0x52
 #define DOWN_ARROW 0x51
 
-void update_position(int, int, int*);
+void update_position(int, int, int*, int*);
 
 #endif
 

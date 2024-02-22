@@ -87,10 +87,12 @@ int main()
       }
 		
 		// Change cursor position		
-		update_position(packet.keycode[0], packet.modifiers, &curx);
+		update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
 		// Render cursor and remove last cursor
-		fbputchar(' ', lastx, lasty);
-		fbputchar(cursor, cury, curx);
+		if (curx != lastx || cury != lasty){
+			fbputchar(' ', lastx, lasty);
+			fbputchar(cursor, cury, curx);
+		}
     }	
   }
 
