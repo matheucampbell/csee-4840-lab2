@@ -2,7 +2,7 @@ CFLAGS = -Wall
 
 OBJECTS = lab2.o fbputchar.o usbkeyboard.o
 
-EDITOBJECTS = edit.o fbputchar.o usbkeyboard.o
+EDITOBJECTS = edit.o keyhandler.o fbputchar.o usbkeyboard.o
 
 TARFILES = Makefile lab2.c \
 	fbputchar.h fbputchar.c \
@@ -23,6 +23,7 @@ edit : $(EDITOBJECTS)
 
 lab2.o : lab2.c fbputchar.h usbkeyboard.h
 edit.o : edit.c fbputchar.h usbkeyboard.h
+keyhandler.o : keyhandler.c keyhandler.h
 fbputchar.o : fbputchar.c fbputchar.h
 usbkeyboard.o : usbkeyboard.c usbkeyboard.h
 

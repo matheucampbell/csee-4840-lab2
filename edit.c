@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "usbkeyboard.h"
 #include <pthread.h>
-#include "key_handler.h"
+#include "keyhandler.h"
 
 #define BUFFER_SIZE 128
 
@@ -28,12 +28,12 @@
  */
 
 struct libusb_device_handle *keyboard;
+uint8_t endpoint_address;
 
-char* cursor;
-int lastx, lasty, curx, cury;
-
-*cursor = CURSOR;
-curx = cury  = 0;
+char cursor = 'p';
+int lastx, lasty;
+int curx = 0;
+int cury = 0;
 
 int main()
 {
@@ -81,10 +81,10 @@ int main()
       }
 		
 		// Change cursor position		
-		update_position(keystate, &curx);
+		update_position(packet.keycode[0], packet.modifiers, &curx);
 		// Render cursor and remove last cursor
-		fpbutc(' ', lastx, lasty);
-		fpbutc(cursor, curx, cury);
+		fbputchar(' ', lastx, lasty);
+		fbputchar(cursor, curx, cury);
     }	
   }
 
