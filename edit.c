@@ -33,7 +33,7 @@ uint8_t endpoint_address;
 char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
-int cury = TYPE_ROW_MIN;;
+int cury = TYPE_ROW_MIN;
 
 int main()
 {

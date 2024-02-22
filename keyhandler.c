@@ -1,9 +1,5 @@
 #include "keyhandler.h"
 
-const int SCREEN_ROWS = 24;
-const int SCREEN_COLS = 64;
-const int TYPE_ROW_MIN = 18;
-
 void update_position(int keycode, int mods, int* x, int* y){
 	if (keycode == RIGHT_ARROW && *x < SCREEN_COLS-1)
 		(*x)++;
