@@ -18,7 +18,7 @@ lab2.tar.gz : $(TARFILES)
 	tar zcf lab2.tar.gz lab2
 	rm -rf lab2
 
-edit : $(OBJECTS)
+edit : $(EDITOBJECTS)
 	cc $(CFLAGS) -o edit $(EDITOBJECTS) -lusb-1.0
 
 lab2.o : lab2.c fbputchar.h usbkeyboard.h

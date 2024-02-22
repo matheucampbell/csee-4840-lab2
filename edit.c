@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "usbkeyboard.h"
 #include <pthread.h>
-#include <keyhandler.h>
+#include "key_handler.h"
 
 #define BUFFER_SIZE 128
 
