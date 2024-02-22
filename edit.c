@@ -30,7 +30,7 @@
 struct libusb_device_handle *keyboard;
 uint8_t endpoint_address;
 
-char cursor = 'p';
+char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
 int cury = 0;
@@ -54,7 +54,7 @@ int main()
     fbputchar('*', 23, col);
   }
 
-  fbputs("Hello CSEE 4840 World!", 4, 10);
+  // fbputs("Hello CSEE 4840 World!", 4, 10);
 
   /* Open the keyboard */
   if ( (keyboard = openkeyboard(&endpoint_address)) == NULL ) {
@@ -84,7 +84,7 @@ int main()
 		update_position(packet.keycode[0], packet.modifiers, &curx);
 		// Render cursor and remove last cursor
 		fbputchar(' ', lastx, lasty);
-		fbputchar(cursor, curx, cury);
+		fbputchar(cursor, cury, curx);
     }	
   }
 
