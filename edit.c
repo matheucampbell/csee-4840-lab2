@@ -48,6 +48,12 @@ int main()
     exit(1);
   }
 
+  for (int row=0; row<24; row++){
+	for (int col=0; col<64; col++){
+		fbputchar(' ', row, col);
+	}
+  }
+
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
     fbputchar('*', 0, col);
