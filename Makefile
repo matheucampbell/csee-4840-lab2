@@ -29,4 +29,4 @@ usbkeyboard.o : usbkeyboard.c usbkeyboard.h
 
 .PHONY : clean
 clean :
-	rm -rf *.o lab2
+	rm -rf *.o lab2 edit
