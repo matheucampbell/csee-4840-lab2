@@ -30,10 +30,15 @@
 struct libusb_device_handle *keyboard;
 uint8_t endpoint_address;
 
+// Cursor initialization and positioning
 char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
 int cury = TYPE_ROW_MIN;
+
+// Text buffer constants
+int BUFF_SIZE = SCREEN_COLS;
+
 
 int main()
 {
@@ -43,6 +48,8 @@ int main()
   int transferred;
   char keystate[12];
 
+  char** textbuf = (char**) malloc(64 * sizeof(char*));
+  
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
     exit(1);
@@ -57,16 +64,16 @@ int main()
   for (int col=0; col<SCREEN_COLS; col++)
     fbputchar('-', TYPE_ROW_MIN-1, col);
 
+  fbputchar(cursor, TYPE_ROW_MIN, 0);
+
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
     fbputchar('*', 0, col);
     fbputchar('*', SCREEN_ROWS-1, col);
   }
 
-  // fbputs("Hello CSEE 4840 World!", 4, 10);
-
   /* Open the keyboard */
-  if ( (keyboard = openkeyboard(&endpoint_address)) == NULL ) {
+  if ((keyboard = openkeyboard(&endpoint_address)) == NULL ) {
     fprintf(stderr, "Did not find a keyboard\n");
     exit(1);
   }
@@ -86,10 +93,11 @@ int main()
       printf("%s\n", keystate);
       fbputs(keystate, 6, 0);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
-	 		break;
+	 		free(textbuf);
+			break;
       }
 	
-	  // Change cursor position		
+	  // Change cursor position	if arrows clicked
 	  update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
 	  // Render cursor and remove last cursor
       if (curx != lastx || cury != lasty){
@@ -97,7 +105,9 @@ int main()
 		fbputchar(cursor, cury, curx);
 	  }
 
-	}	
+	  // Parse letters if letters pressed
+	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
+	}
   }
 
   return 0;
