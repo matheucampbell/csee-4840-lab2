@@ -90,7 +90,7 @@ int main()
 		update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
 		// Render cursor and remove last cursor
 		if (curx != lastx || cury != lasty){
-			fbputchar(' ', lastx, lasty);
+			fbputchar(' ', lasty, lastx);
 			fbputchar(cursor, cury, curx);
 		}
     }	
