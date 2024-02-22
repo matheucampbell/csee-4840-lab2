@@ -3,6 +3,7 @@ DISPLAY FUNCTIONS
 	- horizontal split screen
 	- print string (with wraparound)
 	- behavior when receive is full (scroll or reset)
+	- unique IP addresses shown in different colors
 
 INPUT DISPLAY
 	- text-editing with backspace, arrow keys, return

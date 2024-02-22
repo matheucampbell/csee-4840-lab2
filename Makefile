@@ -2,6 +2,8 @@ CFLAGS = -Wall
 
 OBJECTS = lab2.o fbputchar.o usbkeyboard.o
 
+EDITOBJECTS = edit.o keyhandler.o fbputchar.o usbkeyboard.o
+
 TARFILES = Makefile lab2.c \
 	fbputchar.h fbputchar.c \
 	usbkeyboard.h usbkeyboard.c
@@ -16,10 +18,15 @@ lab2.tar.gz : $(TARFILES)
 	tar zcf lab2.tar.gz lab2
 	rm -rf lab2
 
+edit : $(EDITOBJECTS)
+	cc $(CFLAGS) -o edit $(EDITOBJECTS) -lusb-1.0
+
 lab2.o : lab2.c fbputchar.h usbkeyboard.h
+edit.o : edit.c fbputchar.h usbkeyboard.h
+keyhandler.o : keyhandler.c keyhandler.h
 fbputchar.o : fbputchar.c fbputchar.h
 usbkeyboard.o : usbkeyboard.c usbkeyboard.h
 
 .PHONY : clean
 clean :
-	rm -rf *.o lab2
+	rm -rf *.o lab2 edit
