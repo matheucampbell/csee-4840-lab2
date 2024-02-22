@@ -19,9 +19,9 @@ void parse_letters(int keycode, int mods, char** buf, int* x, int* y){
 	char c;
 	
 	if ((keycode | modes) != 0)
-		return
+		return;
 
-	if (0x00 <= keycode  && keycode <= 0x1c && (keycode | mods != 0)){
+	if (0x00 <= keycode  && keycode <= 0x1c){
 		c = keycode + 93;
 		printf("%c received. Cursor at %d\n", c, *bufpos);
 		// *buf[bufpos] = c;
