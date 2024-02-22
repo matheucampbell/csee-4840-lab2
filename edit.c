@@ -54,6 +54,8 @@ int main()
 	}
   }
 
+  fbputchar(cursor, cury, curx);
+
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
     fbputchar('*', 0, col);
@@ -85,16 +87,15 @@ int main()
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	 		break;
       }
-
-	  if (curx != lastx || cury != lasty){
-		fbputchar(' ', lasty, lastx);
-		fbputchar(cursor, cury, curx);
-	  }
 	
 	  // Change cursor position		
 	  update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
 	  // Render cursor and remove last cursor
-    
+      if (curx != lastx || cury != lasty){
+		fbputchar(' ', lasty, lastx);
+		fbputchar(cursor, cury, curx);
+	  }
+
 	}	
   }
 
