@@ -102,17 +102,12 @@ int main()
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
-	  // Render cursor
       if (curx != lastx || cury != lasty){
 		fbputchar(' ', lasty, lastx);
 	  }
 
-	  fbputs(textbuf, TYPE_ROW_MIN, 0);
-	  
-	  if (curx != lastx || cury != lasty){
-	  	fbputchar(cursor, cury, curx);
-	  }
-
+	  fbputs(textbuf, TYPE_ROW_MIN, 0); 
+	  fbputchar(cursor, cury, curx);
 	}
   }
 
