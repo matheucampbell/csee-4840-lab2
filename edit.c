@@ -107,6 +107,10 @@ int main()
 		fbputchar(' ', lasty, lastx);
 		fbputchar(cursor, cury, curx);
 	  }
+
+	  // Null terminate text buffer and print to screen
+	  textbuf[curx] = '\0';
+	  fbputs(textbuf, TYPE_ROW_MIN, 0);
 	}
   }
 
