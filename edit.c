@@ -33,7 +33,7 @@ uint8_t endpoint_address;
 char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
-int cury = 20;
+int cury = TYPE_ROW_MIN;;
 
 int main()
 {
@@ -55,7 +55,7 @@ int main()
   }
 
   for (int col=0; col<SCREEN_COLS; col++)
-    fbputchar('-', TYPE_ROW_MIN, col);
+    fbputchar('-', TYPE_ROW_MIN-1, col);
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
