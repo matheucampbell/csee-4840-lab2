@@ -48,18 +48,19 @@ int main()
     exit(1);
   }
 
-  for (int row=0; row<24; row++){
-	for (int col=0; col<64; col++){
+  for (int row=0; row < SCREEN_ROWS; row++){
+	for (int col=0; col<SCREEN_COLS; col++){
 		fbputchar(' ', row, col);
 	}
   }
 
-  fbputchar(cursor, cury, curx);
+  for (int col=0; col<SCREEN_COLS; col++)
+    fbputchar('-', cury, TYPE_ROW_MIN);
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
     fbputchar('*', 0, col);
-    fbputchar('*', 23, col);
+    fbputchar('*', SCREEN_ROWS-1, col);
   }
 
   // fbputs("Hello CSEE 4840 World!", 4, 10);
