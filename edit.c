@@ -33,7 +33,7 @@ uint8_t endpoint_address;
 char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
-int cury = 30;
+int cury = 20;
 
 int main()
 {

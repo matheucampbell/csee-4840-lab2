@@ -2,7 +2,7 @@
 
 int SCREEN_ROWS = 24;
 int SCREEN_COLS = 63;
-int TYPE_ROW_MIN = 20;
+int TYPE_ROW_MIN = 18;
 
 void update_position(int keycode, int mods, int* x, int* y){
 	if (keycode == RIGHT_ARROW && *x < SCREEN_ROWS-1)
