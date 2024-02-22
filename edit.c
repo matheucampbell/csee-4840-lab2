@@ -85,15 +85,17 @@ int main()
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	 		break;
       }
-		
-		// Change cursor position		
-		update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
-		// Render cursor and remove last cursor
-		if (curx != lastx || cury != lasty){
-			fbputchar(' ', lasty, lastx);
-			fbputchar(cursor, cury, curx);
-		}
-    }	
+
+	  if (curx != lastx || cury != lasty){
+		fbputchar(' ', lasty, lastx);
+		fbputchar(cursor, cury, curx);
+	  }
+	
+	  // Change cursor position		
+	  update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
+	  // Render cursor and remove last cursor
+    
+	}	
   }
 
   return 0;

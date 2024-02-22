@@ -9,7 +9,7 @@ void update_position(int keycode, int mods, int* x, int* y){
 		(*x)++;
 	else if (keycode == LEFT_ARROW && *x > 0)
 		(*x)--;
-	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN)
+	else if (keycode == UP_ARROW && *y > 0)
 		(*y)--;
 	else if (keycode == DOWN_ARROW && *y < SCREEN_COLS-1)
 		(*y)++;
