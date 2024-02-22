@@ -17,7 +17,7 @@ void update_position(int keycode, int mods, int* x, int* y){
 void parse_letters(int keycode, int mods, char** buf, int* x, int* y){
 	int bufpos = *x;
 	char c;
-	if (0x00 <= keycode  && keycode <= 0x1c){
+	if (0x00 <= keycode  && keycode <= 0x1c && (keycode | mods != 0)){
 		c = keycode + 93;
 		printf("%c received.\n", c);
 		// *buf[bufpos] = c;
