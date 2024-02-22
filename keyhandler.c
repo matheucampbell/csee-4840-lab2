@@ -18,8 +18,8 @@ void parse_letters(int keycode, int mods, char** buf, int* x, int* y){
 	int bufpos = *x;
 	char c;
 	if (0x00 <= keycode  && keycode <= 0x1c){
-		c = keycode + 94;
-		printf("%c received.", c);
+		c = keycode + 93;
+		printf("%c received.\n", c);
 		// *buf[bufpos] = c;
 	}
 	

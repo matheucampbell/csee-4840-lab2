@@ -99,14 +99,14 @@ int main()
 	
 	  // Change cursor position	if arrows clicked
 	  update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
+	  // Parse letters if letters pressed
+	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
+
 	  // Render cursor and remove last cursor
       if (curx != lastx || cury != lasty){
 		fbputchar(' ', lasty, lastx);
 		fbputchar(cursor, cury, curx);
 	  }
-
-	  // Parse letters if letters pressed
-	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 	}
   }
 
