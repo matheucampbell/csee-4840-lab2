@@ -39,7 +39,6 @@ int cury = TYPE_ROW_MIN;
 // Text buffer constants
 int BUFF_SIZE = SCREEN_COLS;
 
-
 int main()
 {
   int err, col;
@@ -98,7 +97,7 @@ int main()
       }
 	
 	  // Change cursor position	if arrows clicked
-	  update_position(packet.keycode[0], packet.modifiers, &curx, &cury);
+	  update_position(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
@@ -109,7 +108,6 @@ int main()
 	  }
 
 	  // Null terminate text buffer and print to screen
-	  textbuf[curx] = '\0';
 	  fbputs(textbuf, TYPE_ROW_MIN, 0);
 	}
   }
