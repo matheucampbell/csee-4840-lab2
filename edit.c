@@ -101,14 +101,13 @@ int main()
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
-	  // Render cursor and remove last cursor
-      if (curx != lastx || cury != lasty){
-		fbputchar(' ', lasty, lastx);
-		fbputchar(cursor, cury, curx);
-	  }
-
 	  // Null terminate text buffer and print to screen
 	  fbputs(textbuf, TYPE_ROW_MIN, 0);
+
+	  // Render cursor
+      if (curx != lastx || cury != lasty){
+		fbputchar(cursor, cury, curx);
+	  }
 	}
   }
 
