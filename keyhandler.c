@@ -34,6 +34,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(tmp, pp);
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
+		
 		update_position(RIGHT_ARROW, mods, buf, x, y);
 	}
 	
@@ -43,11 +44,16 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 // Checks for backspace and enter
 void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = *x;
+	char* pp = &buf[bufpos];
+	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS);
 	
 	// Backspace
-	if (keycode == 0x2a){
+	if (keycode == 0x2a && bufpos > 0){
 		printf("BACKSPACE received. Cursor at %d.\n", bufpos-1);
-		// shift current and all other characters left one.
+		
+		strcpy(tmp, pp);
+		strcpy(pp-1, tmp);
+		
 		update_position(LEFT_ARROW, mods, buf, x, y);
 	}
 }
