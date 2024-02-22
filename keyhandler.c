@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "keyhandler.h"
 
 // Updates cursor upon receiving arrow key input
@@ -18,7 +19,8 @@ void parse_letters(int keycode, int mods, char** buf, int* x, int* y){
 	char c;
 	if (0x00 <= keycode  && keycode <= 0x1c){
 		c = keycode + 94;
-		*buf[bufpos] = c;
+		printf("%c received.", c);
+		// *buf[bufpos] = c;
 	}
 	
 	update_position(RIGHT_ARROW, mods, x, y);
