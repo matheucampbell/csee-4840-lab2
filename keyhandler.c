@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "keyhandler.h"
 
@@ -18,6 +19,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
+	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
 	char c;
 	
 	if ((keycode | mods) == 0)
@@ -29,10 +31,13 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
 		
 		// Insert new letter at cursor position
-		strcpy(pp+1, pp);
+		strcpy(tmp, pp);
+		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
 		update_position(RIGHT_ARROW, mods, buf, x, y);
-	}	
+	}
+	
+	free(tmp);
 }
 
 // Checks for backspace and enter
