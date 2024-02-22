@@ -101,6 +101,8 @@ int main()
 	  update_position(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
+	  // Check for backspace and enter
+	  parse_entry(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
       if (curx != lastx || cury != lasty){
 		fbputchar(' ', lasty, lastx);
