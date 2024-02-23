@@ -140,9 +140,13 @@ void *network_thread_f(void *ignored)
 		if (strlen(recvBuf) > 64) {
 			while (strlen(recvBuf) > 64) {
 				i = COL_NUM;
-				do	i--;
-				while (recvBuf[i] != ' ' || i > 0);
-				if (i == 0) i = COL_NUM;
+				do	{
+					i--;
+					if (i == -1) { 
+						i = COL_NUM;
+						break;
+					}
+				} while (recvBuf[i] != ' ');
 				strncpy(outStr, recvBuf, i);
 				fbputs(outStr, rows, 0);
 				strcpy(recvBuf, recvBuf + i + 1);
