@@ -147,8 +147,11 @@ void fbinput(int start, int end, char *s)
 	} 
 	while (strlen(s) > 64) {
 		i = 64;
-		do i--;
-		while (s[i] != ' ' || s[i] != '\n' || i == -1);
+		for (;;){
+			i--;
+			if (s[i] == ' ' || s[i] == '\n' || i == -1)
+				break;
+		}
 		if (i == -1) i = 64;
 		strncpy(outs, s, i);
 		fbclear(rows, rows);
@@ -156,13 +159,21 @@ void fbinput(int start, int end, char *s)
 		strcpy(outs, "");
 		if (i == 64) strcpy(s, s + i);
 		else strcpy(s, s + i + 1);
-		if (rows != end) rows++;
-		else fbscroll(start, end, 1);
+		if (rows != end) 
+			rows++;
+		else {
+			fbscroll(start, end, 1);
+			fbclear(rows, rows);
+		}
 	}
 	fbclear(rows, rows);
 	fbputs(s, rows, 0);
-	if (rows != end) rows++;
-	else fbscroll(start, end, 1);
+	if (rows != end) 
+		rows++;
+	else {
+		fbscroll(start, end, 1);
+		fbclear(rows, rows);
+	}
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
