@@ -141,7 +141,7 @@ void *network_thread_f(void *ignored)
 			while (strlen(recvBuf) > 64) {
 				i = COL_NUM;
 				do	i--;
-				while (recvBuf[i] != ' ' && i > 0);
+				while (recvBuf[i] != ' ' || i > 0);
 				if (i == 0) i = COL_NUM;
 				strncpy(outStr, recvBuf, i);
 				fbputs(outStr, rows, 0);
