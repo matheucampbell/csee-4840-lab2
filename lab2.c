@@ -115,14 +115,14 @@ int main()
 			
 			if (strlen(input) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
-					write(sockfd, input, strlen(input));
+					//write(sockfd, input, strlen(input));
 					fbclear(21, 22);
 				} else {	
 					strcat(input, keyvalue);
 					fbinput(21, 22, input);
 				}
 			} else if (keyvalue[0] == '\n') {
-					write(sockfd, input, strlen(input));
+					//write(sockfd, input, strlen(input));
       		fbclear(21, 22);
 			}
 			
@@ -157,11 +157,10 @@ void *network_thread_f(void *ignored)
 char key_trans(char *keyid)
 {
 	char symbol;
-	char *key_p = keyid;
 	int num[3]; 
 	int i = 0;
 
-	char *token = strtok(key_p, " ");
+	char *token = strtok(keyid, " ");
 	while (token != NULL) {
 		num[i] = (int)strtol(token, NULL, 16);
 		token = strtok(NULL, " ");
