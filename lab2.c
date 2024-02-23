@@ -110,6 +110,7 @@ int main()
 			keyvalue[0] = key_trans(keystate);
 			keyvalue[1] = '\0';
       printf("%s\n", keystate);
+			/*
 			if (strlen(input) + 1 < 64 * 2 + 32 && keyvalue[0] != '\n') {
       	strcat(input, keyvalue);
 				fbinput(21, 22, input);
@@ -118,8 +119,9 @@ int main()
 				strcat(input, "\n");
 				write(sockfd, input, strlen(input));
 			}
-			//fbputs(keystate, 21, 0);
-      //fbputchar(keyvalue, 22, 0, 255, 255, 255);
+			*/
+			fbputs(keystate, 21, 0);
+      fbputchar(keyvalue, 22, 0, 255, 255, 255);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
