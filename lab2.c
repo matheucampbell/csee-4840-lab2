@@ -119,7 +119,8 @@ int main()
 					fbclear(21, 22);
 				} else {	
 					strcat(input, keyvalue);
-					fbinput(21, 22, input);
+					//fbinput(21, 22, input);
+					printf("%s", input);
 				}
 			} else if (keyvalue[0] == '\n') {
 					//write(sockfd, input, strlen(input));
