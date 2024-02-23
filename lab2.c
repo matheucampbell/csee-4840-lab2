@@ -109,10 +109,10 @@ int main()
 	      packet.keycode[1]);
 			keyvalue[0] = key_trans(keystate);
 			keyvalue[1] = '\0';
-			fbputs(keystate, 21, 0);
-      fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
+			//fbputs(keystate, 21, 0);
+      //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
       printf("%s\n", keystate);
-			/*
+			
 			if (strlen(input) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, input, strlen(input));
@@ -125,7 +125,7 @@ int main()
 					write(sockfd, input, strlen(input));
       		fbclear(21, 22);
 			}
-			*/
+			
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
@@ -157,10 +157,11 @@ void *network_thread_f(void *ignored)
 char key_trans(char *keyid)
 {
 	char symbol;
+	char *key_p = keyid;
 	int num[3]; 
 	int i = 0;
 
-	char *token = strtok(keyid, " ");
+	char *token = strtok(key_p, " ");
 	while (token != NULL) {
 		num[i] = (int)strtol(token, NULL, 16);
 		token = strtok(NULL, " ");
