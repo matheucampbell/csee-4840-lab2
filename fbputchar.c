@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
+#include <string.h>
 
 #include <linux/fb.h>
 
@@ -73,7 +74,7 @@ void fbputchar(char c, int row, int col, int red, int gre, int blu)
     mask = 0x80;
     for (x = 0 ; x < FONT_WIDTH ; x++) {
       if (pixels & mask) {	
-			  pixel[0] = red;	//255; /* Red */
+        pixel[0] = red;	//255; /* Red */
         pixel[1] = gre;	//255; /* Green */
         pixel[2] = blu;	//255; /* Blue */
         pixel[3] = 0;
@@ -123,6 +124,20 @@ void fbclear()
 	}
 }
 
+// Scrolling screen
+// start row, end row: scroll window
+// scroll num lines
+void fbscroll(int start, int end, int num)
+{
+	unsigned char *startp = framebuffer +
+ 		((start + num) * FONT_HEIGHT * 2 + fb_vinfo.yoffset) * fb_finfo.line_length;
+	unsigned char *endp = framebuffer +
+ 		(end * FONT_HEIGHT * 2 + fb_vinfo.yoffset) * fb_finfo.line_length +
+    (63 * FONT_WIDTH * 2 + fb_vinfo.xoffset) * BITS_PER_PIXEL / 8;
+	unsigned char *dest;
+	dest = framebuffer;
+	memcpy(dest, startp, endp - startp + 1);
+}
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
 

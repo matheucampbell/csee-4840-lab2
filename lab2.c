@@ -137,18 +137,24 @@ void *network_thread_f(void *ignored)
   while ( (n = read(sockfd, &recvBuf, BUFFER_SIZE - 1)) > 0 ) {
     recvBuf[n] = '\0';
     printf("%s", recvBuf);
-		while (strlen(recvBuf) > 64) {
-			i = COL_NUM;
-			do i--;
-			while (recvBuf[i] != ' ');
-			strncpy(outStr, recvBuf, i);
-			fbputs(outStr, rows, 0);
-			strcpy(recvBuf, recvBuf + i + 1);
-			rows++;
+		if (strlen(recvBuf) > 64) {
+			while (strlen(recvBuf) > 64) {
+				i = COL_NUM;
+				do i--;
+				while (recvBuf[i] != ' ');
+				strncpy(outStr, recvBuf, i);
+				fbputs(outStr, rows, 0);
+				strcpy(recvBuf, recvBuf + i + 1);
+				if (rows != 19) rows++;
+				else fbscroll(1, 19, 1);
+			}
+  	} else {
+				if (rows != 19) rows++;
+				else fbscroll(1, 19, 1);
 		}
 		fbputs(recvBuf, rows, 0);
   }
-  return NULL;
+	return NULL;
 }
 
 char key_trans(char *keyid)
