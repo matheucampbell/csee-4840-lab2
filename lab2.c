@@ -22,8 +22,7 @@
 #define SERVER_PORT 42000
 
 #define BUFFER_SIZE 128
-#define COL_NUM 64
-#define ROW_NUM 24
+
 /*
  * References:
  *
@@ -51,6 +50,7 @@ int main()
   struct usb_keyboard_packet packet;
   int transferred;
   char keystate[12];
+	char input[161] = "";
 	char keyvalue;
 
   if ((err = fbopen()) != 0) {
@@ -58,7 +58,7 @@ int main()
     exit(1);
   }
 	
-	fbclear();	// Clear screen
+	fbclear(0, 23);	// Clear screen
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
@@ -109,8 +109,16 @@ int main()
 	      packet.keycode[1]);
 			keyvalue = key_trans(keystate);
       printf("%s\n", keystate);
-      fbputs(keystate, 21, 0);
-      fbputchar(keyvalue, 22, 0, 255, 255, 255);
+			if (strlen(input) + 1 < 64 * 2 + 32 && keyvalue != '\n') {
+      	strcat(input, keyvalue);
+				fbinput(21, 22, input);
+			} else {
+      	fbclear(21, 22);
+				strcat(input, "\n");
+				write(sockfd, input, strlen(input));
+			}
+			//fbputs(keystate, 21, 0);
+      //fbputchar(keyvalue, 22, 0, 255, 255, 255);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
@@ -130,34 +138,11 @@ void *network_thread_f(void *ignored)
 {
   char recvBuf[BUFFER_SIZE];
   int n;
-	int i, rows;
-	rows = 1;
-	char outStr[COL_NUM + 1];
   /* Receive data */
   while ( (n = read(sockfd, &recvBuf, BUFFER_SIZE - 1)) > 0 ) {
     recvBuf[n] = '\0';
     printf("%s", recvBuf);
-		if (strlen(recvBuf) > 64) {
-			while (strlen(recvBuf) > 64) {
-				i = COL_NUM;
-				do	{
-					i--;
-					if (i == -1) { 
-						i = COL_NUM;
-						break;
-					}
-				} while (recvBuf[i] != ' ');
-				strncpy(outStr, recvBuf, i);
-				fbputs(outStr, rows, 0);
-				strcpy(recvBuf, recvBuf + i + 1);
-				if (rows != 19) rows++;
-				else fbscroll(1, 19, 1);
-			}
-  	} else {
-				if (rows != 19) rows++;
-				else fbscroll(1, 19, 1);
-		}
-		fbputs(recvBuf, rows, 0);
+		fbinput(1, 19, recvBuf);
   }
 	return NULL;
 }
@@ -174,11 +159,18 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	num[1] += 93;
-	if (num[1] > 92 && num[1] <123) {
+	if (num[1] >= 4  && num[1] <= 29) {
+		num[1] += 93;
 		symbol = (char)num[1];
-	} else {
-		symbol = 'x';
+	} else if (num[1] >= 30  && num[1] <= 38) {
+		num[1] += 19;
+		symbol = (char)num[1];
+	} else if (num[1] == 39) {
+		symbol = '0';
+	}	else if (num[1] == 44) {
+		symbol = ' ';
+	} else if (num[1] == 40) {
+		symbol = '\n';
 	}
 	return symbol;
 }
