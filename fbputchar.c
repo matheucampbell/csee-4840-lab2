@@ -149,7 +149,7 @@ void fbinput(int start, int end, char *s)
 		i = 64;
 		for (;;){
 			i--;
-			if (s[i] == ' ' || s[i] == '\n' || i == -1)
+			if (s[i] == ' ' || i == -1)
 				break;
 		}
 		if (i == -1) i = 64;
