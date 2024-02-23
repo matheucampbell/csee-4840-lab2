@@ -166,13 +166,14 @@ void fbinput(int start, int end, char *s)
 			fbclear(rows, rows);
 		}
 	}
-	fbclear(rows, rows);
-	fbputs(s, rows, 0);
-	if (rows != end) 
-		rows++;
-	else {
-		fbscroll(start, end, 1);
+	if (rows != end + 1) {
 		fbclear(rows, rows);
+		fbputs(s, rows, 0);
+		rows++;
+	} else {
+		fbscroll(start, end, 1);
+		fbclear(rows - 1, rows - 1);
+		fbputs(s, rows - 1, 0);
 	}
 }
 

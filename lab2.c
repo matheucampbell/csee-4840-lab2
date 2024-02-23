@@ -110,18 +110,20 @@ int main()
 			keyvalue[0] = key_trans(keystate);
 			keyvalue[1] = '\0';
       printf("%s\n", keystate);
-			/*
-			if (strlen(input) + 1 < 64 * 2 + 32 && keyvalue[0] != '\n') {
-      	strcat(input, keyvalue);
-				fbinput(21, 22, input);
-			} else {
-      	fbclear(21, 22);
-				strcat(input, "\n");
-				write(sockfd, input, strlen(input));
+			if (strlen(input) + 1 < 64 * 2 + 32) {
+      	if (keyvalue[0] == '\n') {
+					write(sockfd, input, strlen(input));
+					fbclear(21, 22);
+				} else {	
+					strcat(input, keyvalue);
+					fbinput(21, 22, input);
+				}
+			} else if (keyvalue[0] == '\n') {
+					write(sockfd, input, strlen(input));
+      		fbclear(21, 22);
 			}
-			*/
-			fbputs(keystate, 21, 0);
-      fbputchar(keyvalue, 22, 0, 255, 255, 255);
+			//fbputs(keystate, 21, 0);
+      //fbputchar(keyvalue, 22, 0, 255, 255, 255);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
