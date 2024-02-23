@@ -122,7 +122,6 @@ void fbclear(int start, int end)
 			fbputchar(' ', row, col, 0, 0, 0);
 		}
 	}
-	return NULL;
 }
 
 // Scrolling screen
@@ -136,7 +135,6 @@ void fbscroll(int start, int end, int num)
 	unsigned char *dest = framebuffer +
  		(start * FONT_HEIGHT * 2 + fb_vinfo.yoffset) * fb_finfo.line_length;
 	memcpy(dest, startp, endp - startp + 1);
-	return NULL;
 }
 
 void fbinput(int start, int end, char *s)
@@ -166,7 +164,6 @@ void fbinput(int start, int end, char *s)
 	fbputs(s, rows, 0);
 	if (rows != end) rows++;
 	else fbscroll(start, end, 1);
-	return NULL;
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz

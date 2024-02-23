@@ -51,7 +51,7 @@ int main()
   int transferred;
   char keystate[12];
 	char input[161] = "";
-	char keyvalue;
+	char keyvalue[2];
 
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
@@ -107,9 +107,10 @@ int main()
     if (transferred == sizeof(packet)) {
       sprintf(keystate, "%02x %02x %02x", packet.modifiers, packet.keycode[0],
 	      packet.keycode[1]);
-			keyvalue = key_trans(keystate);
+			keyvalue[0] = key_trans(keystate);
+			keyvalue[1] = '\0';
       printf("%s\n", keystate);
-			if (strlen(input) + 1 < 64 * 2 + 32 && keyvalue != '\n') {
+			if (strlen(input) + 1 < 64 * 2 + 32 && keyvalue[0] != '\n') {
       	strcat(input, keyvalue);
 				fbinput(21, 22, input);
 			} else {
