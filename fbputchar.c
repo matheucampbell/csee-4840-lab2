@@ -163,7 +163,7 @@ void fbinput(int start, int end, char *s)
 	fbclear(rows, rows);
 	fbputs(s, rows, 0);
 	if (rows != end) rows++;
-	else fbscroll(start, end, 1);
+	else fbscroll(start, end - 1, 1);
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
