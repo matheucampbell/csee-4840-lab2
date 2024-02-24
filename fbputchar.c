@@ -110,7 +110,7 @@ void fbputchar(char c, int row, int col, int red, int gre, int blu)
 void fbputs(const char *s, int row, int col)
 {
   char c;
-  while ((c = *s++) != 0) fbputchar(c, row, col++, 255, 255, 255);
+  while ((c = *s++) != 0 && c != 10 && c != 13) fbputchar(c, row, col++, 255, 255, 255);
 }
 
 // Clear screen *
@@ -139,13 +139,13 @@ void fbscroll(int start, int end, int num)
 void fbinput(int start, int end, char *s)
 {
 	int i; 
-	char outs[65];
+	char outs[64];
 	static int rows, rst = 0;
 	if (!rst) {
 		rows = start;
 		rst = 1;
 	} 
-	while (strlen(s) > 64) {
+	while (strlen(s) > 63) {
 		i = 64;
 		for (;;){
 			i--;
@@ -154,11 +154,12 @@ void fbinput(int start, int end, char *s)
 		}
 		if (i == -1) {
 			i = 64;
-			outs[65] = '\0';
+			strncpy(outs, s, i - 1);
+			outs[i - 1] = '\0';
 		} else {
+			strncpy(outs, s, i);
 			outs[i] = '\0';
 		}
-		strncpy(outs, s, i);
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
@@ -168,7 +169,7 @@ void fbinput(int start, int end, char *s)
 			fbclear(rows - 1, rows - 1);
 			fbputs(outs, rows - 1, 0);
 		}
-		if (i == 64) strcpy(s, s + i);
+		if (i == 64) strcpy(s, s + i - 1);
 		else strcpy(s, s + i + 1);
 	}
 	if (rows != end + 1) {
