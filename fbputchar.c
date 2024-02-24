@@ -149,13 +149,14 @@ void fbinput(int start, int end, char *s)
 		i = 64;
 		for (;;){
 			i--;
-			if (s[i] == ' ')
+			if (i == -1 || s[i] == ' ')
 				break;
 		}
 		if (i == -1) {
 			i = 64;
 			strncpy(outs, s, i - 1);
 			outs[i - 1] = '\0';
+			printf("outs = %s\n", outs);
 		} else {
 			strncpy(outs, s, i);
 			outs[i] = '\0';
