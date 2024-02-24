@@ -139,7 +139,7 @@ void fbscroll(int start, int end, int num)
 void fbinput(int start, int end, char *s)
 {
 	int i; 
-	char outs[64];
+	char outs[64] = "";
 	static int rows, rst = 0;
 	if (!rst) {
 		rows = start;
@@ -147,10 +147,8 @@ void fbinput(int start, int end, char *s)
 	} 
 	while (strlen(s) > 63) {
 		i = 64;
-		for (;;){
+		while (i != -1 && s[i] != ' ') {
 			i--;
-			if (i == -1 || s[i] == ' ')
-				break;
 		}
 		if (i == -1) {
 			i = 64;
@@ -170,8 +168,11 @@ void fbinput(int start, int end, char *s)
 			fbclear(rows - 1, rows - 1);
 			fbputs(outs, rows - 1, 0);
 		}
-		if (i == 64) strcpy(s, s + i - 1);
-		else strcpy(s, s + i + 1);
+		if (i == 64) {
+			strcpy(s, s + i - 1);
+		} else {
+			strcpy(s, s + i + 1);
+		}
 	}
 	if (rows != end + 1) {
 		fbclear(rows, rows);
