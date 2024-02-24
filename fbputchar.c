@@ -138,9 +138,9 @@ void fbscroll(int start, int end, int num)
 
 void fbinput(int start, int end, char *s)
 {
-	int i, rows;
+	int i; 
 	char outs[65];
-	static int rst = 0;
+	static int rows, rst = 0;
 	if (!rst) {
 		rows = start;
 		rst = 1;
@@ -154,10 +154,10 @@ void fbinput(int start, int end, char *s)
 		}
 		if (i == -1) i = 64;
 		strncpy(outs, s, i);
+		outs[i] = '\0';
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
-			strcpy(outs, "");
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
