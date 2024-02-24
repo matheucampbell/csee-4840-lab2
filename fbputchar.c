@@ -10,7 +10,7 @@
  *
  * https://web.archive.org/web/20110415224759/http://www.diskohq.com/docu/api-reference/fb_8h-source.html
  */
-
+#include <stdio.h>
 #include "fbputchar.h"
 #include <sys/types.h>
 #include <sys/stat.h>
