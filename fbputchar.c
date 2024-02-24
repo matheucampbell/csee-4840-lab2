@@ -154,7 +154,7 @@ void fbinput(int start, int end, char *s)
 		}
 		if (i == -1) {
 			i = 64;
-			outs[65] = '\0';
+			outs[64] = '\0';
 		} else {
 			outs[i] = '\0';
 		}
