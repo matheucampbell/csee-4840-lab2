@@ -161,13 +161,13 @@ void fbinput(int start, int end, char *s)
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
-			printf("outs1 = %s\n", outs);
+	//		printf("outs1 = %s\n", outs);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
 			fbclear(rows - 1, rows - 1);
 			fbputs(outs, rows - 1, 0);
-			printf("outs2 = %s\n", outs);
+	//		printf("outs2 = %s\n", outs);
 		}
 		if (i == 64) {
 			strcpy(s, s + i - 1);
@@ -178,13 +178,61 @@ void fbinput(int start, int end, char *s)
 	if (rows != end + 1) {
 		fbclear(rows, rows);
 		fbputs(s, rows, 0);
-			printf("outs3 = %s\n", outs);
+	//	printf("outs3 = %s\n", outs);
 		rows++;
 	} else {
 		fbscroll(start, end, 1);
 		fbclear(rows - 1, rows - 1);
 		fbputs(s, rows - 1, 0);
-			printf("outs4 = %s\n", outs);
+	//	printf("outs4 = %s\n", outs);
+	}
+}
+
+void fbtype(int start, int end, char *s)
+{
+	int i, rows; 
+	char outs[64] = "";
+	rows = start;
+	while (strlen(s) > 63) {
+		i = 64;
+		while (i != -1 && s[i] != ' ') {
+			i--;
+		}
+		if (i == -1) {
+			i = 64;
+			strncpy(outs, s, i - 1);
+			outs[i - 1] = '\0';
+		} else {
+			strncpy(outs, s, i);
+			outs[i] = '\0';
+		}
+		if (rows != end + 1) {
+			fbclear(rows, rows);
+			fbputs(outs, rows, 0);
+	//		printf("outs1 = %s\n", outs);
+			rows++;
+		} else {
+			fbscroll(start, end, 1);
+			fbclear(rows - 1, rows - 1);
+			fbputs(outs, rows - 1, 0);
+	//		printf("outs2 = %s\n", outs);
+		}
+		if (i == 64) {
+			strcpy(s, s + i - 1);
+		} else {
+			strcpy(s, s + i + 1);
+		}
+	}
+	if (rows != end + 1) {
+		fbclear(rows, rows);
+		fbputs(s, rows, 0);
+	//	printf("outs3 = %s\n", outs);
+		rows++;
+	} else {
+		fbscroll(start, end, 1);
+		fbclear(rows - 1, rows - 1);
+		fbputs(s, rows - 1, 0);
+	//	printf("outs4 = %s\n", outs);
 	}
 }
 

@@ -115,15 +115,15 @@ int main()
 			
 			if (strlen(input) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
-					//write(sockfd, input, strlen(input));
+					write(sockfd, input, strlen(input));
 					fbclear(21, 22);
 				} else {	
 					strcat(input, keyvalue);
-					//fbinput(21, 22, input);
+					fbtype(21, 22, input);
 					printf("%s", input);
 				}
 			} else if (keyvalue[0] == '\n') {
-					//write(sockfd, input, strlen(input));
+					write(sockfd, input, strlen(input));
       		fbclear(21, 22);
 			}
 			
