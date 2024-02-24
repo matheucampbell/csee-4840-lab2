@@ -154,7 +154,6 @@ void fbinput(int start, int end, char *s)
 			i = 64;
 			strncpy(outs, s, i - 1);
 			outs[i - 1] = '\0';
-			printf("outs = %s\n", outs);
 		} else {
 			strncpy(outs, s, i);
 			outs[i] = '\0';
@@ -162,11 +161,13 @@ void fbinput(int start, int end, char *s)
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
+			printf("outs = %s\n", outs);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
 			fbclear(rows - 1, rows - 1);
 			fbputs(outs, rows - 1, 0);
+			printf("outs = %s\n", outs);
 		}
 		if (i == 64) {
 			strcpy(s, s + i - 1);
@@ -177,11 +178,13 @@ void fbinput(int start, int end, char *s)
 	if (rows != end + 1) {
 		fbclear(rows, rows);
 		fbputs(s, rows, 0);
+			printf("outs = %s\n", outs);
 		rows++;
 	} else {
 		fbscroll(start, end, 1);
 		fbclear(rows - 1, rows - 1);
 		fbputs(s, rows - 1, 0);
+			printf("outs = %s\n", outs);
 	}
 }
 
