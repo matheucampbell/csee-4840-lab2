@@ -116,7 +116,7 @@ int main()
 			if (strlen(input) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, input, strlen(input));
-					fbclear(21, 22);
+					input[] = "";
 				} else {	
 					strcat(input, keyvalue);
 					fbtype(21, 22, input);
@@ -124,7 +124,7 @@ int main()
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, input, strlen(input));
-      		fbclear(21, 22);
+					input[] = "";
 			}
 			
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */

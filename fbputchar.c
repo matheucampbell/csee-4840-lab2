@@ -192,6 +192,7 @@ void fbtype(int start, int end, char *s)
 {
 	int i, rows; 
 	char outs[64] = "";
+	
 	rows = start;
 	while (strlen(s) > 63) {
 		i = 64;
