@@ -156,13 +156,13 @@ void fbinput(int start, int end, char *s)
 		strncpy(outs, s, i);
 		if (rows != end + 1) {
 			fbclear(rows, rows);
-			fbputs(out, rows, 0);
+			fbputs(outs, rows, 0);
 			strcpy(outs, "");
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
 			fbclear(rows - 1, rows - 1);
-			fbputs(out, rows - 1, 0);
+			fbputs(outs, rows - 1, 0);
 		}
 		if (i == 64) strcpy(s, s + i);
 		else strcpy(s, s + i + 1);
