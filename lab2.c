@@ -149,7 +149,7 @@ void *network_thread_f(void *ignored)
   /* Receive data */
   while ( (n = read(sockfd, &recvBuf, BUFFER_SIZE - 1)) > 0 ) {
     recvBuf[n] = '\0';
-    printf("%s", recvBuf);
+    printf("%s\n", recvBuf);
 		fbinput(1, 19, recvBuf);
   }
 	return NULL;
