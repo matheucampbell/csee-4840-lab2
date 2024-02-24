@@ -146,15 +146,19 @@ void fbinput(int start, int end, char *s)
 		rst = 1;
 	} 
 	while (strlen(s) > 64) {
-		i = 64;
+		i = 63;
 		for (;;){
 			i--;
 			if (s[i] == ' ' || i == -1)
 				break;
 		}
-		if (i == -1) i = 64;
+		if (i == -1) {
+			i = 64;
+			outs[65] = '\0';
+		} else {
+			outs[i] = '\0';
+		}
 		strncpy(outs, s, i);
-		outs[i] = '\0';
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
