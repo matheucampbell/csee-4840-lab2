@@ -166,6 +166,7 @@ char key_trans(char *keyid)
 	char symbol;
 	int num[3]; 
 	int i = 0;
+	static int temp = 0;
 
 	char *token = strtok(keyid, " ");
 	while (token != NULL) {
@@ -173,18 +174,20 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
+	if (temp != num[1])
+		temp = num[1];
+	else
+		temp = num[2];
 	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
-	if (num[1] >= 4  && num[1] <= 29) {
-		num[1] += 93;
-		symbol = (char)num[1];
-	} else if (num[1] >= 30  && num[1] <= 38) {
-		num[1] += 19;
-		symbol = (char)num[1];
-	} else if (num[1] == 39) {
+	if (temp >= 4  && temp <= 29) {
+		symbol = (char)(temp + 93);
+	} else if (temp >= 30  && temp <= 38) {
+		symbol = (char)(temp + 19);
+	} else if (temp == 39) {
 		symbol = '0';
-	}	else if (num[1] == 44) {
+	}	else if (temp == 44) {
 		symbol = ' ';
-	} else if (num[1] == 40) {
+	} else if (temp == 40) {
 		symbol = '\n';
 	}
 	return symbol;
