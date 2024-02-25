@@ -122,10 +122,11 @@ int main()
 				} else {	
 					strcat(input, keyvalue);
 					strcat(sendbuf, keyvalue);
-					fbtype(21, 22, input);
+					fbtype(21, 22, input, 0);
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
+					fbtype(21, 22, input, 1);
 					input[0] = '\0';
 					sendbuf[0] = '\0';
 					fbclear(21, 22);

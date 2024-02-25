@@ -188,15 +188,17 @@ void fbinput(int start, int end, char *s)
 	}
 }
 
-void fbtype(int start, int end, char *s)
+void fbtype(int start, int end, char *s, int rst)
 {
 	int i; 
 	char outs[64] = "";
-	static int rows, rst = 0;
-	if (!rst) {
+	static int rows, flag = 1;
+	if (flag) {
 		rows = start;
-		rst = 1;
-	} 
+		flag = 0;
+	} else if (rst) {
+		flag = 1;
+	}
 	while (strlen(s) > 63) {
 		i = 64;
 		while (i != -1 && s[i] != ' ') {
