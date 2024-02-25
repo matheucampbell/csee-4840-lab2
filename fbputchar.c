@@ -210,14 +210,12 @@ void fbtype(int start, int end, char *s)
 			strncpy(outs, s, i);
 			outs[i] = '\0';
 		}
-		if (rows != end + 1) {
+		if (rows != end) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
-			fbclear(rows - 1, rows - 1);
-			fbputs(outs, rows - 1, 0);
 		}
 		if (i == 64) {
 			strcpy(s, s + i - 1);
@@ -225,14 +223,8 @@ void fbtype(int start, int end, char *s)
 			strcpy(s, s + i + 1);
 		}
 	}
-	if (rows != end + 1) {
-		fbclear(rows, rows);
-		fbputs(s, rows, 0);
-	} else {
-		fbscroll(start, end, 1);
-		fbclear(rows - 1, rows - 1);
-		fbputs(s, rows - 1, 0);
-	}
+	fbclear(rows, rows);
+	fbputs(s, rows, 0);
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
