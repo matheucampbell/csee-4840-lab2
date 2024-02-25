@@ -116,6 +116,7 @@ int main()
 			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
+					fbtype(21, 22, input, 1);
 					input[0] = '\0';
 					sendbuf[0] = '\0';
 					fbclear(21, 22);
