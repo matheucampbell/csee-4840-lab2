@@ -131,7 +131,7 @@ int main()
 					sendbuf[0] = '\0';
 					fbclear(21, 22);
 			}
-			printf("%s", input);
+			printf("%s\n", input);
 
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
