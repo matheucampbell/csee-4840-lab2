@@ -112,7 +112,6 @@ int main()
 			keyvalue[1] = '\0';
 			//fbputs(keystate, 21, 0);
       //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
-      printf("%s\n", keystate);
 			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
@@ -174,6 +173,7 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
+	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
 	if (num[1] >= 4  && num[1] <= 29) {
 		num[1] += 93;
 		symbol = (char)num[1];
