@@ -190,10 +190,13 @@ void fbinput(int start, int end, char *s)
 
 void fbtype(int start, int end, char *s)
 {
-	int i, rows; 
+	int i; 
 	char outs[64] = "";
-	
-	rows = start;
+	static int rows, rst = 0;
+	if (!rst) {
+		rows = start;
+		rst = 1;
+	} 
 	while (strlen(s) > 63) {
 		i = 64;
 		while (i != -1 && s[i] != ' ') {
@@ -210,13 +213,11 @@ void fbtype(int start, int end, char *s)
 		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
-	//		printf("outs1 = %s\n", outs);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
 			fbclear(rows - 1, rows - 1);
 			fbputs(outs, rows - 1, 0);
-	//		printf("outs2 = %s\n", outs);
 		}
 		if (i == 64) {
 			strcpy(s, s + i - 1);
@@ -227,13 +228,10 @@ void fbtype(int start, int end, char *s)
 	if (rows != end + 1) {
 		fbclear(rows, rows);
 		fbputs(s, rows, 0);
-	//	printf("outs3 = %s\n", outs);
-		rows++;
 	} else {
 		fbscroll(start, end, 1);
 		fbclear(rows - 1, rows - 1);
 		fbputs(s, rows - 1, 0);
-	//	printf("outs4 = %s\n", outs);
 	}
 }
 
