@@ -51,6 +51,7 @@ int main()
   int transferred;
   char keystate[12];
 	char input[161] = "";
+	char sendbuf[161] = "";
 	char keyvalue[2];
 
   if ((err = fbopen()) != 0) {
@@ -112,23 +113,25 @@ int main()
 			//fbputs(keystate, 21, 0);
       //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
       printf("%s\n", keystate);
-			
-			if (strlen(input) + 1 <= 64 * 2 + 32) {
+			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
-					write(sockfd, input, strlen(input));
+					write(sockfd, sendbuf, strlen(sendbuf));
 					input[0] = '\0';
+					sendbuf[0] = '\0';
 					fbclear(21, 22);
 				} else {	
 					strcat(input, keyvalue);
+					strcat(sendbuf, keyvalue);
 					fbtype(21, 22, input);
-					printf("%s", input);
 				}
 			} else if (keyvalue[0] == '\n') {
-					write(sockfd, input, strlen(input));
+					write(sockfd, sendbuf, strlen(sendbuf));
 					input[0] = '\0';
+					sendbuf[0] = '\0';
 					fbclear(21, 22);
 			}
-			
+			printf("%s", input);
+
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }

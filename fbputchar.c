@@ -188,12 +188,10 @@ void fbinput(int start, int end, char *s)
 	}
 }
 
-void fbtype(int start, int end, char *s1)
+void fbtype(int start, int end, char *s)
 {
 	int i; 
 	char outs[64] = "";
-	char s[160] = "";
-	strcpy(s, s1);
 	static int rows, rst = 0;
 	if (!rst) {
 		rows = start;
