@@ -56,4 +56,6 @@ void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
 		
 		update_position(LEFT_ARROW, mods, buf, x, y);
 	}
+
+	free(tmp);
 }
