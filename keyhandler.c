@@ -31,7 +31,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 
 // Updates text buffer upon receiving text, then moves cursor
 void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
-	int bufpos = *x;
+	int bufpos = (*y - TYPE_ROW_MIN) + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
 	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
 	char c;
@@ -57,7 +57,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 
 // Checks for backspace and enter
 void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
-	int bufpos = *x;
+	int bufpos = (*y - TYPE_ROW_MIN) + *x;
 	char* pp = &buf[bufpos];
 	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS);
 	
