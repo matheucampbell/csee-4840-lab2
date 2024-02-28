@@ -188,45 +188,37 @@ void fbinput(int start, int end, char *s)
 	}
 }
 
-void fbtype(int start, int end, char *s, int rst)
+void fbtype(int start, int end, char *s)
 {
-	int i; 
-	char outs[64] = "";
-	static int rows, flag = 1;
-	if (flag) {
-		rows = start;
-		flag = 0;
-	} else if (rst) {
-		flag = 1;
-	}
-	while (strlen(s) > 63) {
+	int i;
+	char ins[161] = ""; 
+	char outs[65] = "";
+	static int rows;
+	strcpy(ins, s);
+	rows = start;
+	while (strlen(ins) > 64) {
 		i = 64;
-		while (i != -1 && s[i] != ' ') {
-			i--;
-		}
-		if (i == -1) {
-			i = 64;
-			strncpy(outs, s, i - 1);
-			outs[i - 1] = '\0';
-		} else {
-			strncpy(outs, s, i);
-			outs[i] = '\0';
-		}
-		if (rows != end) {
+		strncpy(outs, ins, i);
+		outs[i] = '\0';
+		if (rows != end + 1) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
+			fbclear(rows - 1, rows - 1);
+			fbputs(outs, rows - 1, 0);
 		}
-		if (i == 64) {
-			strcpy(s, s + i - 1);
-		} else {
-			strcpy(s, s + i + 1);
-		}
+		strcpy(ins, ins + i + 1);
 	}
-	fbclear(rows, rows);
-	fbputs(s, rows, 0);
+	if (rows != end + 1) {
+		fbclear(rows, rows);
+		fbputs(ins, rows, 0);
+	} else {
+		fbscroll(start, end, 1);
+		fbclear(rows - 1, rows - 1);
+		fbputs(ins, rows - 1, 0);
+	}
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
