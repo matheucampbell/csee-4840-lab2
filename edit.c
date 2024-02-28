@@ -97,14 +97,14 @@ int main()
 			break;
       }
 	
-	  // Change cursor position	if arrows clicked
+	  // Change cursor position if arrows clicked
 	  update_position(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 	  // Check for backspace and enter
 	  parse_entry(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
-      if (curx != lastx || cury != lasty){
+     if (curx != lastx || cury != lasty){
 		fbputchar(' ', lasty, lastx, 255, 255, 255);
 	  }
 
