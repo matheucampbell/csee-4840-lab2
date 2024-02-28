@@ -1,7 +1,7 @@
 #ifndef _KEYHANDLER_H
 #define _KEYHANDLER_H
 
-#define CURSOR 0x23
+#define CURSOR 0x5f
 #define RIGHT_ARROW 0x4f
 #define LEFT_ARROW 0x50
 #define UP_ARROW 0x52
