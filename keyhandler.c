@@ -33,7 +33,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN) + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
-	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
+	char* tmp = (char*) malloc(2*sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
 	char c;
 	
 	if ((keycode | mods) == 0)
