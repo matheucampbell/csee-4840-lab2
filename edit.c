@@ -109,7 +109,7 @@ int main()
 	  }
 
      fbclear(21, 22);
-	  fbputlongs(textbuf, TYPE_ROW_MIN, 0, SCREEN_COLS, 2); 
+	  fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
 	  fbputchar(cursor, cury, curx, 255, 255, 255);
 	}
   }
