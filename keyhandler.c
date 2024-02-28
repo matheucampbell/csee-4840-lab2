@@ -5,7 +5,7 @@
 
 // Updates cursor upon receiving arrow key input
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
-	int hpos = (*y - TYPE_ROW_MIN) + *x;
+	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	if (keycode == RIGHT_ARROW){ 
 		if (*x < SCREEN_COLS)
 			(*x)++;
