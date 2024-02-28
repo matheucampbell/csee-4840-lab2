@@ -6,20 +6,22 @@
 // Updates cursor upon receiving arrow key input
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN) + *x;
-	if (keycode == RIGHT_ARROW) 
+	if (keycode == RIGHT_ARROW && hpos < strlen(buf)){ 
 		if (*x < SCREEN_COLS - 1)
 			(*x)++;
-		else{
+		if (*x == SCREEN_COLS){
 			*x = 0;
 			(*y)++;
 		}
-	else if (keycode == LEFT_ARROW && *x > 0)
+	}
+	else if (keycode == LEFT_ARROW && *x > 0){
 		if (*x > 0)
 			(*x)--;
 		if (*x == 0 && (*y - TYPE_ROW_MIN) > 0){ // not in first row
 			*x = SCREEN_COLS-1;
 			(*y)--;
 		}
+	}
 	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN)
 		(*y)--;
 	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2)
