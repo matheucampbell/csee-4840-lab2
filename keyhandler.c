@@ -59,7 +59,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 
 // Checks for backspace and enter
 void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
-	int bufpos = (*y - TYPE_ROW_MIN) + *x;
+	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos];
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*));
 	
