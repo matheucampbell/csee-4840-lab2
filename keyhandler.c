@@ -7,9 +7,9 @@
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN) + *x;
 	if (keycode == RIGHT_ARROW){ 
-		if (*x < SCREEN_COLS - 1)
+		if (*x < SCREEN_COLS)
 			(*x)++;
-		if (*x == SCREEN_COLS - 1){
+		if (*x == SCREEN_COLS){
 			printf("now");
 			*x = 0;
 			(*y)++;
