@@ -8,17 +8,16 @@
 // Updates cursor upon receiving arrow key input
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
-	if (keycode == RIGHT_ARROW){ 
+	if (keycode == RIGHT_ARROW && hpos < strlen(buf)){ 
 		if (*x < SCREEN_COLS)
 			(*x)++;
-		if (*x == SCREEN_COLS){
-			printf("now");
+		if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
 			*x = 0;
 			(*y)++;
 		}
 	}
 	else if (keycode == LEFT_ARROW && *x > 0){
-		if (*x > 0)
+		if (hpos < SCREEN_ROWS)
 			(*x)--;
 		if (*x == 0 && (*y - TYPE_ROW_MIN) > 0){ // not in first row
 			*x = SCREEN_COLS-1;
