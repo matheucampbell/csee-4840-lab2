@@ -16,8 +16,8 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 			(*y)++;
 		}
 	}
-	else if (keycode == LEFT_ARROW && *x > 0){
-		if (hpos < SCREEN_ROWS)
+	else if (keycode == LEFT_ARROW && hpos > 0){
+		if (*x > 0)
 			(*x)--;
 		if (*x == 0 && (*y - TYPE_ROW_MIN) > 0){ // not in first row
 			*x = SCREEN_COLS-1;
