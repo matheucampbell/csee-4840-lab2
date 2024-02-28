@@ -24,10 +24,12 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 			(*y)--;
 		}
 	}
-	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN)
+	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN && hpos + SCREEN_ROWS < strlen(buf)){
 		(*y)--;
-	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2)
+	}
+	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos - 64 > 0){
 		(*y)++;
+	}
 }
 
 // Updates text buffer upon receiving text, then moves cursor
