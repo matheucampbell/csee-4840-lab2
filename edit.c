@@ -36,9 +36,6 @@ int lastx, lasty;
 int curx = 0;
 int cury = TYPE_ROW_MIN;
 
-// Text buffer constants
-int BUFF_SIZE = SCREEN_COLS;
-
 int main()
 {
   int err, col;
@@ -47,7 +44,7 @@ int main()
   int transferred;
   char keystate[12];
 
-  char* textbuf = (char*) malloc(64 * sizeof(char));
+  char* textbuf = (char*) malloc(BUFFER_SIZE * sizeof(char));
   textbuf[0] = '\0';
   
   if ((err = fbopen()) != 0) {

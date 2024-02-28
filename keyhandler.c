@@ -3,6 +3,8 @@
 #include <string.h>
 #include "keyhandler.h"
 
+#define BUFFER_SIZE 128
+
 // Updates cursor upon receiving arrow key input
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
@@ -33,7 +35,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
-	char* tmp = (char*) malloc(2*sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
+	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*)); // Stores pp until the end for strcpy
 	char c;
 	
 	if ((keycode | mods) == 0)
@@ -59,7 +61,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN) + *x;
 	char* pp = &buf[bufpos];
-	char* tmp = (char*) malloc(sizeof(char)*SCREEN_COLS);
+	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*));
 	
 	// Backspace
 	if (keycode == 0x2a && bufpos > 0){
