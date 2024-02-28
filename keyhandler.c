@@ -10,6 +10,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 		if (*x < SCREEN_COLS - 1)
 			(*x)++;
 		if (*x == SCREEN_COLS){
+			printf("now");
 			*x = 0;
 			(*y)++;
 		}
