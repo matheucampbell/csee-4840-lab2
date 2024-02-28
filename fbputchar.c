@@ -128,7 +128,7 @@ void fbputlongs(const char *s, int row, int col, int rlim, int clim){
     if (c+1 == clim){
       c = 0;
       r++;
-    }
+    } else ++c;
     if (r+1 == rlim) break;
     fbputchar(ch, row+r, col+c, 255, 255, 255);
   }
