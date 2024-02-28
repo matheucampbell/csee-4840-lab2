@@ -27,13 +27,11 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 		(*y)--;
 	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2)
 		(*y)++;
-
-	printf("HPOS: %d", hpos);
 }
 
 // Updates text buffer upon receiving text, then moves cursor
 void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
-	int bufpos = (*y - TYPE_ROW_MIN) + *x;
+	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
 	char* tmp = (char*) malloc(2*sizeof(char)*SCREEN_COLS); // Stores pp until the end for strcpy
 	char c;
