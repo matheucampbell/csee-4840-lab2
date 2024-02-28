@@ -1,6 +1,7 @@
 #ifndef _USBKEYBOARD_H
 #define _USBKEYBOARD_H
 
+//#include "libusb.h"
 #include <libusb-1.0/libusb.h>
 
 #define USB_HID_KEYBOARD_PROTOCOL 1

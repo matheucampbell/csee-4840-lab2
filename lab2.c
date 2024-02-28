@@ -21,7 +21,7 @@
 #define SERVER_HOST "128.59.19.114"
 #define SERVER_PORT 42000
 
-#define BUFFER_SIZE 128
+#define BUFFER_SIZE 256 
 
 /*
  * References:
@@ -39,6 +39,7 @@ uint8_t endpoint_address;
 
 pthread_t network_thread;
 void *network_thread_f(void *);
+char key_trans(char *keyid);
 
 int main()
 {
@@ -49,19 +50,25 @@ int main()
   struct usb_keyboard_packet packet;
   int transferred;
   char keystate[12];
+	char sendbuf[161] = "";
+	char keyvalue[2];
+	int length, cursor = 0;
 
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
     exit(1);
   }
+	
+	fbclear(0, 23);	// Clear screen
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
-    fbputchar('*', 0, col);
-    fbputchar('*', 23, col);
+    fbputchar('*', 0, col, 255, 255, 255);
+    fbputchar('*', 23, col, 255, 255, 255);
+    fbputchar('-', 20, col, 255, 255, 255);	// Devided line *
   }
 
-  fbputs("Hello CSEE 4840 World!", 4, 10);
+  //fbputs("Hello CSEE 4840 World!", 4, 10);
 
   /* Open the keyboard */
   if ( (keyboard = openkeyboard(&endpoint_address)) == NULL ) {
@@ -101,8 +108,44 @@ int main()
     if (transferred == sizeof(packet)) {
       sprintf(keystate, "%02x %02x %02x", packet.modifiers, packet.keycode[0],
 	      packet.keycode[1]);
-      printf("%s\n", keystate);
-      fbputs(keystate, 6, 0);
+			keyvalue[0] = key_trans(keystate);
+			keyvalue[1] = '\0';
+			//fbputs(keystate, 21, 0);
+      //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
+	    length = strlen(sendbuf);
+			if (length + 1 <= 64 * 2 + 32) {
+      	if (keyvalue[0] == '\n') {
+					write(sockfd, sendbuf, strlen(sendbuf));
+					sendbuf[0] = '\0';
+					fbclear(21, 22);
+					fbtype(21, 22, sendbuf);
+				} else if (keyvalue[0] == 8) {
+					sendbuf[length + cursor - 1] = '\0';
+					fbtype(21, 22, sendbuf);
+				} else if (keyvalue[0] == (char)17) {
+					if (cursor < 0)
+						cursor++;
+				} else if (keyvalue[0] == (char)18) {
+					if (cursor > -length)
+						cursor--;
+				} else if (keyvalue[0] == (char)19) {
+					if (cursor < 0)
+						cursor += 64;
+				} else if (keyvalue[0] == (char)20) {
+					if (cursor > -length)
+						cursor -= 64;
+				} else {	
+					strcpy(sendbuf + length + cursor, keyvalue);
+					fbtype(21, 22, sendbuf);
+				}
+			} else if (keyvalue[0] == '\n') {
+					write(sockfd, sendbuf, strlen(sendbuf));
+					fbtype(21, 22, sendbuf);
+					sendbuf[0] = '\0';
+					fbclear(21, 22);
+			}
+			printf("%s\n", sendbuf);
+
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	break;
       }
@@ -125,10 +168,45 @@ void *network_thread_f(void *ignored)
   /* Receive data */
   while ( (n = read(sockfd, &recvBuf, BUFFER_SIZE - 1)) > 0 ) {
     recvBuf[n] = '\0';
-    printf("%s", recvBuf);
-    fbputs(recvBuf, 8, 0);
+    printf("%s\n", recvBuf);
+		fbinput(1, 19, recvBuf);
   }
-
-  return NULL;
+	return NULL;
 }
 
+char key_trans(char *keyid)
+{
+	char symbol;
+	int num[3]; 
+	int i = 0;
+	static int temp = 0;
+
+	char *token = strtok(keyid, " ");
+	while (token != NULL) {
+		num[i] = (int)strtol(token, NULL, 16);
+		token = strtok(NULL, " ");
+		i++;
+	}
+	if (temp != num[1])
+		temp = num[1];
+	else
+		temp = num[2];
+	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
+	if (temp >= 4  && temp <= 29) {
+		symbol = (char)(temp + 93);
+	} else if (temp >= 30  && temp <= 38) {
+		symbol = (char)(temp + 19);
+	} else if (temp == 39) {
+		symbol = '0';
+	}	else if (temp == 44) {
+		symbol = ' ';
+	} else if (temp == 40) {
+		symbol = '\n';
+	} else if (temp == 42) {
+		symbol = 8;
+	} else if (temp >= 79 && temp <= 82) {
+		symbol = (char)(temp - 62);
+	} 
+	
+	return symbol;
+}
