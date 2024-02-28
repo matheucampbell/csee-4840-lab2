@@ -9,7 +9,7 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	if (keycode == RIGHT_ARROW && hpos < strlen(buf))
 		if (*x < SCREEN_COLS - 1)
 			(*x)++;
-		if (*x == SCREEN_COLS - 1 && *y > 1){ // not in last row
+		if (*x == SCREEN_COLS - 1 && *y < SCREEN_ROWS - 2){ // not in last row
 			*x = 0;
 			(*y)++;
 		}
