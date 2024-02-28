@@ -130,9 +130,9 @@ void fbputlongs(const char *s, int row, int col, int rlim, int clim){
 
     if (c == clim){
       c = 0;
-      ++r;
+      r=1;
     }
-    if (r+1 == rlim) break;
+    if (r == rlim) break;
   }
 }
 
