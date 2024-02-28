@@ -68,8 +68,8 @@ int main()
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
-    fbputchar('*', 0, col);
-    fbputchar('*', SCREEN_ROWS-1, col);
+    fbputchar('*', 0, col, 255, 255, 255);
+    fbputchar('*', SCREEN_ROWS-1, col, 255, 255, 255);
   }
 
   /* Open the keyboard */
