@@ -57,14 +57,14 @@ int main()
 
   for (int row=0; row < SCREEN_ROWS; row++){
 	for (int col=0; col<SCREEN_COLS; col++){
-		fbputchar(' ', row, col);
+		fbputchar(' ', row, col, 255, 255, 255);
 	}
   }
 
   for (int col=0; col<SCREEN_COLS; col++)
-    fbputchar('-', TYPE_ROW_MIN-1, col);
+    fbputchar('-', TYPE_ROW_MIN-1, col, 255, 255, 255);
 
-  fbputchar(cursor, TYPE_ROW_MIN, 0);
+  fbputchar(cursor, TYPE_ROW_MIN, 0, 255, 255, 255);
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
@@ -105,12 +105,12 @@ int main()
 	  parse_entry(packet.keycode[0], packet.modifiers, textbuf, &curx, &cury);
 
       if (curx != lastx || cury != lasty){
-		fbputchar(' ', lasty, lastx);
+		fbputchar(' ', lasty, lastx, 255, 255, 255);
 	  }
 
      fbclear(21, 22);
 	  fbputs(textbuf, TYPE_ROW_MIN, 0); 
-	  fbputchar(cursor, cury, curx);
+	  fbputchar(cursor, cury, curx, 255, 255, 255);
 	}
   }
 
