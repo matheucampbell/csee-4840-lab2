@@ -9,7 +9,7 @@
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64
-#define TYPE_ROW_MIN 18
+#define TYPE_ROW_MIN 21
 
 void update_position(int, int, char*, int*, int*);
 void parse_letters(int, int, char*, int*, int*);

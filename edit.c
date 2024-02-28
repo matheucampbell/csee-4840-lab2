@@ -108,6 +108,7 @@ int main()
 		fbputchar(' ', lasty, lastx);
 	  }
 
+     fbclear(21, 22);
 	  fbputs(textbuf, TYPE_ROW_MIN, 0); 
 	  fbputchar(cursor, cury, curx);
 	}
