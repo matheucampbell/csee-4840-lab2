@@ -24,10 +24,10 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 			(*y)--;
 		}
 	}
-	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN && hpos + SCREEN_ROWS < strlen(buf)){
+	else if (keycode == UP_ARROW && *y > TYPE_ROW_MIN && hpos + SCREEN_COLS < strlen(buf)){
 		(*y)--;
 	}
-	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos - 64 > 0){
+	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos - SCREEN_COLS > 0){
 		(*y)++;
 	}
 }
