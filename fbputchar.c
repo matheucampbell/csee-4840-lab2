@@ -113,6 +113,28 @@ void fbputs(const char *s, int row, int col)
   while ((c = *s++) != 0 && c != 10 && c != 13) fbputchar(c, row, col++, 255, 255, 255);
 }
 
+/*
+ * Multiline printing
+ * row, col: starting place
+ * rlim: number of rows allowed to span
+ * clim: number of cols allowed to span
+*/
+
+void fbputlongs(const char *s, int row, int col, int rlim, int clim){
+  char ch;
+  int r = 0;
+  int c = 0;
+  while ((ch = *s++) != 0){
+    if (c+1 == clim){
+      c = 0;
+      r++;
+    }
+    if (r+1 == rlim) break;
+    fpbutchar(ch, row+r, col+c);
+  }
+}
+
+
 // Clear screen *
 void fbclear(int start, int end)
 {
