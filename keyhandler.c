@@ -27,6 +27,8 @@ void update_position(int keycode, int mods, char* buf, int* x, int* y){
 		(*y)--;
 	else if (keycode == DOWN_ARROW && *y < SCREEN_ROWS-2)
 		(*y)++;
+
+	printf("HPOS: %d", hpos);
 }
 
 // Updates text buffer upon receiving text, then moves cursor
