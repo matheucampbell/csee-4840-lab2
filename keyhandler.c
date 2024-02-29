@@ -42,8 +42,6 @@ void parse_letters(int keycode_a, int keycode_b, int mods, char* buf, int* x, in
 	if ((keycode_a | mods) == 0 || strlen(buf) == (SCREEN_ROWS-TYPE_ROW_MIN-1)*SCREEN_COLS)
 		return;
 
-	if (keycode_b != 0)	keycode_a = keycode_b;
-
 	// a through z (upper and lowercase) 
 	if (0x00 < keycode_a && keycode_a <= 0x1c){
 		c = mods == 0x02 ? keycode_a + 61: keycode_a + 93;
