@@ -149,7 +149,7 @@ int main()
 					cursor = 0;
 					fbclear(21, 22);
 			} else if (keyvalue[0] == (char)8) {				// The following part is necessary when sendbuf reaches to the end
-					sendbuf[length + cursor - 1] = '\0';
+					strcpy(sendbuf + length + cursor - 1, sendbuf + length + cursor);
 			} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
 						cursor++;
@@ -227,7 +227,7 @@ char key_trans(char *keyid)
 {
 	char symbol;
 	int num[3]; 
-	int i = 0;
+	int i = 0, cap = 0;
 	static int temp = 0;
 
 	char *token = strtok(keyid, " ");
@@ -242,7 +242,16 @@ char key_trans(char *keyid)
 		temp = num[2];
 	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
 	if (temp >= 4  && temp <= 29) {
-		symbol = (char)(temp + 93);
+		if (cap) 
+			if (num[0] == 2)
+				symbol = (char)(temp + 93);
+			else
+				symbol = (char)(temp + 61);
+		else 
+			if (num[0] == 2)
+				symbol = (char)(temp + 61);
+			else
+				symbol = (char)(temp + 93);
 	} else if (temp >= 30  && temp <= 38) {
 		symbol = (char)(temp + 19);
 	} else if (temp == 39) {
@@ -257,7 +266,18 @@ char key_trans(char *keyid)
 		symbol = (char)(temp - 62);
 	} else if (temp == 0) {
 		symbol = 0;
-	} 
+	} else if (temp == 54){
+		symbol = '.';
+	}	else if (temp == 55) {
+		symbol = ',';
+	}	else if (temp == 57) {
+		cap = ~cap;
+	} else if (temp == 52) {
+		if (num[0] == 2)
+			symbol = '"';
+		else
+			symbol = ''';
+	}
 	
 	return symbol;
 }
