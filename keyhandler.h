@@ -23,7 +23,7 @@
 #define ZERO_OFF 0x9
 #define ZERO_OFF_SH 0x0
 
-#define ISSHIFT(x) (x == 0x02 || x == 0x02 || x == 0x22)
+#define ISSHIFT(x) (x == 0x02 || x == 0x20 || x == 0x22)
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64
