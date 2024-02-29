@@ -150,7 +150,7 @@ int main()
 			int cl = num % 64;
 			int up = 0;
 			if (length >= 128) {
-				if (num < 64) {
+				if (num <= 64) {
 					up = 1;
 				} else if (num < 128) {
 					if (!up)
@@ -161,12 +161,16 @@ int main()
 					up = 0;
 					rw--;
 				}
+			} else {
+				strncpy(input, sendbuf, 128);
+				input[128] = '\0';
+				fbtype(21, 22, input);
 			}
-			
-			strncpy(input, sendbuf, 128);
-			input[128] = '\0';
-			fbtype(21, 22, input);
-			
+			if (up) {
+				strncpy(input, sendbuf, 128);
+				input[128] = '\0';
+				fbtype(21, 22, input);
+			}
 			fbcursor(rw, cl);
 
 			printf("%s\n", sendbuf);
