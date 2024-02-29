@@ -8,7 +8,7 @@
 // Updates cursor upon receiving arrow key input
 void update_position(int keycode, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
-	if (keycode == RIGHT_ARROW && hpos < strlen(buf)){ 
+	if (keycode == RIGHT_ARROW && hpos < strlen(buf)-1){ 
 		if (*x < SCREEN_COLS)
 			(*x)++;
 		if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
@@ -44,7 +44,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 
 	// a through z (lowercase) 
 	if (0x00 <= keycode && keycode <= 0x1c){
-		c = keycode + 93;
+		c = mods == 2 ? keycode + 93: keycode + 61;
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
 		
 		// Insert new letter at cursor position
