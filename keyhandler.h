@@ -10,6 +10,18 @@
 #define DOWN_ARROW 0x51
 
 #define ISLETTER(x) (0x04 <= x && x <= 0x1d)
+#define LET_OFF 0x5d
+#define LET_OFF_SH 0x3d
+
+#define ISDIGIT(x) (0x1e <= x && x <= 0x26)
+#define DIG_OFF 0x12
+#define DIG_OFF_SH 0x03
+
+#define ISZERO(x) (x == 0x27)
+#define ZERO_OFF 0x12
+#define ZERO_OFF_SH 0x01
+
+#define SHIFT_MOD 0x02
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64

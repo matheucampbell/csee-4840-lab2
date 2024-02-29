@@ -47,16 +47,21 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*)); // Stores pp until the end for strcpy
-	char c;
+	char c == 0;
 	
 	if ((keycode | mods) == 0 || strlen(buf) == (SCREEN_ROWS-TYPE_ROW_MIN-1)*SCREEN_COLS)
 		return;
 
 	// a through z (upper and lowercase) 
-	if (ISLETTER(keycode)){
-		c = mods == 0x02 ? keycode + 61: keycode + 93;
+	if (ISLETTER(keycode))
+		c = mods == SHIFT_MOD ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
+	else if (ISDIGIT(keycode))
+		c = mods == DIG_MOD ? keycode + DIG_OFF_SH: keycode + DIG_OFF;
+	else if (ISZERO(keycode))
+		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
+	
+	if (c != 0){	
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
-		
 		// Insert new letter at cursor position
 		strcpy(tmp, pp);
 		strcpy(pp+1, tmp);
