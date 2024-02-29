@@ -48,7 +48,7 @@ int main()
 
   char* textbuf = (char*) malloc(BUFFER_SIZE * sizeof(char));
   textbuf[0] = '\0';
-  packet_l = {0, 0, 0};
+  // packet_l = {0, 0, 0};
   
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
@@ -98,7 +98,7 @@ int main()
       }
       
       // Extract new presses from last packet and this packet
-	   update_pressed(&new_press, (int*) packet.keycode, (int*) packet_l.keycode);
+	   update_pressed(&new_press, packet.keycode, packet_l.keycode);
 	   // Change cursor position if arrows clicked
 	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	   // Parse letters if letters pressed
