@@ -10,8 +10,8 @@
 #define DOWN_ARROW 0x51
 
 #define ISLETTER(x) (0x04 <= x && x <= 0x1d)
-#define LET_OFF 0x5d
-#define LET_OFF_SH 0x3d
+#define LETT_OFF 0x5d
+#define LETT_OFF_SH 0x3d
 
 #define ISDIGIT(x) (0x1e <= x && x <= 0x26)
 #define DIG_OFF 0x12
