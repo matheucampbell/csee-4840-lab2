@@ -113,6 +113,7 @@ int main()
 			keyvalue[1] = '\0';
 			// My code
 			//
+			int j;
 			length = strlen(sendbuf);
 			if (length < 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
@@ -135,7 +136,7 @@ int main()
 					if (cursor > -length + 63)
 						cursor -= 64;
 				} else if (keyvalue[0] != (char)0) {
-						strcpy(sendbuf, sendbuf + length + cursor);
+						memcopy(sendbuf + length + cursor + 1, sendbuf + length + cursor, -cursor + 1);
 						sendbuf[length + cursor] =  keyvalue[0];
 				}
 			} else if (keyvalue[0] == '\n') {
