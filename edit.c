@@ -44,7 +44,7 @@ int main()
   struct usb_keyboard_packet packet_l;  // Last packet
   int transferred;
   char keystate[12];
-  int new_press[2];  // Currently pressed non-mod keys
+  int new_press;  // Newly pressed non-mod keys
 
   char* textbuf = (char*) malloc(BUFFER_SIZE * sizeof(char));
   textbuf[0] = '\0';
@@ -92,27 +92,27 @@ int main()
       printf("%s\n", keystate);
       fbputs(keystate, 6, 0);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
-	 		free(textbuf);
-			break;
+	 	  free(textbuf);
+		  break;
       }
       
       // Extract new presses from last packet and this packet
-	  update_pressed(new_press, (int*) packet.keycode, (int*) packet_l.keycode);
-	  // Change cursor position if arrows clicked
-	  update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
-	  // Parse letters if letters pressed
-	  parse_letters(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
-	  // Check for backspace and enter
-	  parse_entry(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
+	   update_pressed(&new_press, (int*) packet.keycode, (int*) packet_l.keycode);
+	   // Change cursor position if arrows clicked
+	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
+	   // Parse letters if letters pressed
+	   parse_letters(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
+  	   // Check for backspace and enter
+	   parse_entry(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
 
-     if (curx != lastx || cury != lasty){
-		fbputchar(' ', lasty, lastx, 255, 255, 255);
-	 }
+      if (curx != lastx || cury != lasty){
+		  fbputchar(' ', lasty, lastx, 255, 255, 255);
+	   } 
 
       fbclear(21, 22);
-	  fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
-	  fbputchar(cursor, cury, curx, 255, 255, 255);
-	}
+	   fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
+	   fbputchar(cursor, cury, curx, 255, 255, 255);
+	 }
   }
 
   return 0;

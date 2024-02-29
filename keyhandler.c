@@ -12,14 +12,15 @@ static int presscheck(int* presses, int target){
 
 // Updates new_press and stores newly pressed keys
 void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
-	new_p[0] = (new[0] != old[0] && new[0] != old[1]) ? new[0] : 0;
-	new_p[1] = (new[1] != old[0] && new[1] != old[1]) ? new[1] : 0;
+	*new_p = 0;
+	if (new[0] != old[0] && new[0] != old[1]): *new_p = new[0];
+	if (new[1] != old[0] && new[1] != old[1]): *new_p = new[1];
 }
 
 // Updates cursor upon receiving arrow key input
-void update_position(int* presses, int mods, char* buf, int* x, int* y){
+void update_position(int pressed, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
-	if (presscheck(presses, RIGHT_ARROW) && hpos < strlen(buf)-1){ 
+	if (pressed == RIGHT_ARROW && hpos < strlen(buf)-1){ 
 		if (*x < SCREEN_COLS)
 			(*x)++;
 		if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
@@ -27,7 +28,7 @@ void update_position(int* presses, int mods, char* buf, int* x, int* y){
 			(*y)++;
 		}
 	}
-	else if (presscheck(presses, LEFT_ARROW) && hpos > 0){
+	else if (pressed == LEFT_ARROW && hpos > 0){
 		if (*x > 0)
 			(*x)--;
 		if (*x == 0 && (*y - TYPE_ROW_MIN) > 0){ // not in first row
@@ -35,10 +36,10 @@ void update_position(int* presses, int mods, char* buf, int* x, int* y){
 			(*y)--;
 		}
 	}
-	else if (presscheck(presses, UP_ARROW) && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS < strlen(buf)){
+	else if (pressed == UP_ARROW && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS < strlen(buf)){
 		(*y)--;
 	}
-	else if (presscheck(presses, DOWN_ARROW) && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS > 0){
+	else if (presses == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS > 0){
 		(*y)++;
 	}
 }
