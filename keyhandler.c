@@ -39,7 +39,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*)); // Stores pp until the end for strcpy
 	char c;
 	
-	if ((keycode | mods) == 0)
+	if ((keycode | mods) == 0 || strlen(buf) == (SCREEN_ROWS-TYPE_ROW_MIN-1)*SCREEN_COLS)
 		return;
 
 	// a through z (lowercase) 
