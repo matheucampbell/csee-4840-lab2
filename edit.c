@@ -101,7 +101,7 @@ int main()
 	   // Change cursor position if arrows clicked
 	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	   // Parse letters if letters pressed
-	   parse_letters(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
+	   parse_letters(new_press, packet.modifiers, textbuf, &curx, &cury);
   	   // Check for backspace and enter
 	   parse_entry(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
 
