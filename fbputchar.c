@@ -194,6 +194,7 @@ void fbtype(int start, int end, char *s)
 	char outs[65] = "";
 	int rows;
 	rows = start;
+	fbclear(start, end);
 	while (strlen(s) > 64) {
 		i = 64;
 		strncpy(outs, s, i);
