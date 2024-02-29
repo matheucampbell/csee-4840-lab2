@@ -43,7 +43,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		return;
 
 	// a through z (lowercase) 
-	if (0x00 <= keycode && keycode <= 0x1c){
+	if (0x00 < keycode && keycode <= 0x1c){
 		c = mods == 0x02 ? keycode + 61: keycode + 93;
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
 		
