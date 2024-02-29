@@ -59,19 +59,19 @@ void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 		return;
 
 	if (ISLETTER(keycode))
-		c = mods == SHIFT_MOD ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
-	else if (ISDIGIT(keycode) && mods != SHIFT_MOD)
+		c = ISSHIFT(mods) ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
+	else if (ISDIGIT(keycode) && !ISSHIFT(mods))
 		c = keycode + DIG_OFF;
-	else if (ISDIGIT(keycode) && mods == SHIFT_MOD)
+	else if (ISDIGIT(keycode) && !ISSHIFT(mods))
 		c = keycode + sh_digits[keycode - 30];
 	else if (ISZERO(keycode))
-		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
+		c = ISSHIFT(mods) ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
 	else if (ISSPACE(keycode))
 		c = SPACE;
 	else {
 		for (int i = 0; i < 11; i++){
 			if (keycode == sh_usb[i])
-				c = mods == SHIFT_MOD ? sh_ascii[i] : nsh_ascii[i];
+				c = ISSHIFT(mods) ? sh_ascii[i] : nsh_ascii[i];
 		}
 	}
 	
