@@ -11,9 +11,9 @@
 #define SCREEN_COLS 64
 #define TYPE_ROW_MIN 21
 
-void update_position(int, int, char*, int*, int*);
-void parse_letters(int, int, char*, int*, int*);
-void parse_entry(int, int, char*, int*, int*);
+void update_position(int, int, int, char*, int*, int*);
+void parse_letters(int, int, int, char*, int*, int*);
+void parse_entry(int, int, int, char*, int*, int*);
 
 #endif
 
