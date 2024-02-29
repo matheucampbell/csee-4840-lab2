@@ -120,6 +120,7 @@ int main()
 					write(sockfd, sendbuf, strlen(sendbuf));
 					sendbuf[0] = '\0';
 					input[0] = '\0';
+					cursor = 0;
 					fbclear(21, 22);
 				} else if (keyvalue[0] == (char)8) {
 					strcpy(sendbuf + length + cursor - 1, sendbuf + length + cursor);
@@ -145,6 +146,7 @@ int main()
 					write(sockfd, sendbuf, strlen(sendbuf));
 					sendbuf[0] = '\0';
 					input[0] = '\0';
+					cursor = 0;
 					fbclear(21, 22);
 			} else if (keyvalue[0] == (char)8) {				// The following part is necessary when sendbuf reaches to the end
 					sendbuf[length + cursor - 1] = '\0';
