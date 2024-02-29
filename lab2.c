@@ -135,9 +135,7 @@ int main()
 					if (cursor > -length + 63)
 						cursor -= 64;
 				} else if (keyvalue[0] != (char)0) {
-					if (cursor == 0)
-						strcpy(sendbuf + length + cursor, keyvalue);
-					else	
+						strcpy(sendbuf + length + cursor + 1, sendbuf + length + cursor);
 						strncpy(sendbuf + length + cursor, keyvalue, 1);
 				}
 			} else if (keyvalue[0] == '\n') {
