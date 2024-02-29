@@ -16,7 +16,7 @@
 void update_pressed(int*, uint8_t*, uint8_t*);
 void update_position(int, int, char*, int*, int*);
 void parse_letters(int, int, char*, int*, int*);
-void parse_entry(int, int, int, char*, int*, int*);
+void parse_entry(int, int, char*, int*, int*);
 
 #endif
 
