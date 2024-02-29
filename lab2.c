@@ -274,9 +274,9 @@ char key_trans(char *keyid)
 		cap = ~cap;
 	} else if (temp == 52) {
 		if (num[0] == 2)
-			symbol = '"';
+			symbol = '\"';
 		else
-			symbol = ''';
+			symbol = '\'';
 	}
 	
 	return symbol;
