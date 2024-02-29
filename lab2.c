@@ -136,7 +136,7 @@ int main()
 						cursor -= 64;
 				} else if (keyvalue[0] != (char)0) {
 					if (cursor == 0)
-						strcpy(sendbuf, keyvalue);
+						strcat(sendbuf, keyvalue);
 					else	
 						strncpy(sendbuf + length + cursor, keyvalue, 1);
 				}
