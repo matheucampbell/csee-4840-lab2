@@ -6,7 +6,7 @@
 #define BUFFER_SIZE 128
 
 // Updates cursor upon receiving arrow key input
-void update_position(int keycode_a, int keycode_b int mods, char* buf, int* x, int* y){
+void update_position(int keycode_a, int keycode_b, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	if (keycode_a == RIGHT_ARROW && hpos < strlen(buf)-1){ 
 		if (*x < SCREEN_COLS)
@@ -52,7 +52,7 @@ void parse_letters(int keycode_a, int keycode_b, int mods, char* buf, int* x, in
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
 		
-		update_position(RIGHT_ARROW, mods, buf, x, y);
+		update_position(RIGHT_ARROW, 0, mods, buf, x, y);
 	}
 	
 	free(tmp);
@@ -71,7 +71,7 @@ void parse_entry(int keycode_a, int keycode_b, int mods, char* buf, int* x, int*
 		strcpy(tmp, pp);
 		strcpy(pp-1, tmp);
 		
-		update_position(LEFT_ARROW, mods, buf, x, y);
+		update_position(LEFT_ARROW, 0, mods, buf, x, y);
 	}
 
 	free(tmp);
