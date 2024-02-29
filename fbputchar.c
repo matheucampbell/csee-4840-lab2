@@ -145,13 +145,13 @@ void fbinput(int start, int end, char *s)
 		rows = start;
 		rst = 1;
 	} 
-	while (strlen(s) > 63) {
-		i = 64;
+	while (strlen(s) > 64) {
+		i = 65;
 		while (i != -1 && s[i] != ' ') {
 			i--;
 		}
 		if (i == -1) {
-			i = 64;
+			i = 65;
 			strncpy(outs, s, i - 1);
 			outs[i - 1] = '\0';
 		} else {
@@ -169,7 +169,7 @@ void fbinput(int start, int end, char *s)
 			fbputs(outs, rows - 1, 0);
 	//		printf("outs2 = %s\n", outs);
 		}
-		if (i == 64) {
+		if (i == 65) {
 			strcpy(s, s + i - 1);
 		} else {
 			strcpy(s, s + i + 1);
