@@ -81,7 +81,7 @@ void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(tmp, pp);
 		strcpy(pp-1, tmp);
 		
-		update_position(LEFT_ARROW,  mods, buf, x, y);
+		update_position(LEFT_ARROW, mods, buf, x, y);
 	}
 
 	free(tmp);
