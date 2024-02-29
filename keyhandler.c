@@ -66,7 +66,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
 		
-		update_position(RIGHT_ARROW, 0, mods, buf, x, y);
+		update_position(RIGHT_ARROW, 0, buf, x, y);
 	}
 	
 	free(tmp);
