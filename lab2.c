@@ -179,19 +179,20 @@ int main()
 					up = 0;
 					rw--;
 				}
+				if (up) {
+					strncpy(input, sendbuf, 128);
+					input[128] = '\0';
+					fbtype(21, 22, input);
+				}	else {
+					strcpy(input, sendbuf + 64);
+					fbtype(21, 22, input);	
+				}
 			} else {
 				strncpy(input, sendbuf, 128);
 				input[128] = '\0';
 				fbtype(21, 22, input);
 			}
-			if (up) {
-				strncpy(input, sendbuf, 128);
-				input[128] = '\0';
-				fbtype(21, 22, input);
-			}	else {
-				strcpy(input, sendbuf + 64);
-				fbtype(21, 22, input);	
-			}
+			
 			fbcursor(rw, cl);
 
 			printf("%s\n", sendbuf);
