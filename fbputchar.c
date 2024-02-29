@@ -188,17 +188,12 @@ void fbinput(int start, int end, char *s)
 	}
 }
 
-void fbtype(int start, int end, char *s, int rst)
+void fbtype(int start, int end, char *s)
 {
 	int i; 
 	char outs[65] = "";
-	static int rows, flag = 1;
-	if (flag) {
-		rows = start;
-		flag = 0;
-	} else if (rst) {
-		flag = 1;
-	}
+	int rows;
+	rows = start;
 	while (strlen(s) > 64) {
 		i = 64;
 		strncpy(outs, s, i);
@@ -217,7 +212,7 @@ void fbtype(int start, int end, char *s, int rst)
 }
 
 void fbcursor(int row, int col) {
-	char c = '\0';
+	char c = '\n';
 	fbputchar(c, row, col, 255, 255, 255);
 }
 

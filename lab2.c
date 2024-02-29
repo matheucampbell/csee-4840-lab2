@@ -114,14 +114,13 @@ int main()
 			//fbputs(keystate, 21, 0);
       //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
 			length = strlen(sendbuf);
-			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
+			if (length + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
-					fbtype(21, 22, input, 1);
 					sendbuf[0] = '\0';
 					input[0] = '\0';
 					fbclear(21, 22);
-				} else if (keyvalue[0] == 8) {
+				} else if (keyvalue[0] == (char)8) {
 					sendbuf[length + cursor - 1] = '\0';
 				} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
@@ -140,7 +139,6 @@ int main()
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
-					fbtype(21, 22, input, 1);
 					sendbuf[0] = '\0';
 					input[0] = '\0';
 					fbclear(21, 22);
@@ -159,16 +157,17 @@ int main()
 						rw--;
 				} else {
 					strcpy(input, sendbuf + 128);
-					fbtype(21, 22, input, 1);	
+					fbtype(21, 22, input);	
 					up = 0;
 					rw--;
 				}
 			}
-			fbcursor(rw, cl);
 			
 			strncpy(input, sendbuf, 128);
 			input[128] = '\0';
-			fbtype(21, 22, input, 1);
+			fbtype(21, 22, input);
+			
+			fbcursor(rw, cl);
 
 			printf("%s\n", sendbuf);
 
