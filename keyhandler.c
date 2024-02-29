@@ -8,8 +8,9 @@
 
 // USB codes of symbols with shift variants (except letters and 0-9)
 int sh_usb[11] = {45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56};
-int nsh_ascii[11] = {45, 61, 91, 93, 92, 59, 39, 96, 44, 46, 47};
-int sh_ascii[11] = {95, 43, 123, 125, 124, 58, 34, 126, 60, 62, 63};
+int nsh_ascii[11] = {45, 61, 91, 93, 92, 59, 39, 96, 44, 46, 47}; // non-shifted equiv
+int sh_ascii[11] = {95, 43, 123, 125, 124, 58, 34, 126, 60, 62, 63}; // shifted equiv
+int sh_digits[11] = {3, 33, 3, 4, 2, 59, 2, 5, 2, 2};  // offset for shifted digits
 
 // Updates new_press and stores newly pressed keys
 void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
@@ -61,6 +62,8 @@ void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 		c = mods == SHIFT_MOD ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
 	else if (ISDIGIT(keycode) && mods != SHIFT_MOD)
 		c = keycode + DIG_OFF;
+	else if (ISDIGIT(keycode) && mods == SHIFT_MOD)
+		c = keycode + sh_digits[keycode - 30];
 	else if (ISZERO(keycode))
 		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
 	else {
