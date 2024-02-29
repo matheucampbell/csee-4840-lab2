@@ -176,8 +176,6 @@ int main()
 					if (!up)
 						rw--;
 				} else {
-					strcpy(input, sendbuf + 64);
-					fbtype(21, 22, input);	
 					up = 0;
 					rw--;
 				}
@@ -190,6 +188,9 @@ int main()
 				strncpy(input, sendbuf, 128);
 				input[128] = '\0';
 				fbtype(21, 22, input);
+			}	else {
+				strcpy(input, sendbuf + 64);
+				fbtype(21, 22, input);	
 			}
 			fbcursor(rw, cl);
 
