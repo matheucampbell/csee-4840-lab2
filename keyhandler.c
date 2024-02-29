@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libusb-1.0/libusb.h>
 #include "keyhandler.h"
 
 #define BUFFER_SIZE 128
@@ -10,7 +11,7 @@ static int presscheck(int* presses, int target){
 }
 
 // Updates new_press and stores newly pressed keys
-void update_pressed(int* new_p, int* new, int* old){
+void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
 	new_p[0] = (new[0] != old[0] && new[0] != old[1]) ? new[0] : 0;
 	new_p[1] = (new[1] != old[0] && new[1] != old[1]) ? new[1] : 0;
 }
