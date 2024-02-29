@@ -7,7 +7,7 @@
 #define BUFFER_SIZE 128
 
 // USB codes of symbols with shift variants (except letters and 0-9)
-int sh_usb[11] = {45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56};
+int sh_usb[11] = {45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56};
 int nsh_ascii[11] = {45, 61, 91, 93, 92, 59, 39, 96, 44, 46, 47};
 int sh_ascii[11] = {95, 43, 123, 125, 124, 58, 34, 126, 60, 62, 63};
 
