@@ -1,6 +1,8 @@
 #ifndef _KEYHANDLER_H
 #define _KEYHANDLER_H
 
+#include <libusb-1.0/libusb.h>
+
 #define CURSOR 0x5f
 #define RIGHT_ARROW 0x4f
 #define LEFT_ARROW 0x50
