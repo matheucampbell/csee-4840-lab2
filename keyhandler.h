@@ -14,12 +14,12 @@
 #define LETT_OFF_SH 0x3d
 
 #define ISDIGIT(x) (0x1e <= x && x <= 0x26)
-#define DIG_OFF 0x12
+#define DIG_OFF 0x13
 #define DIG_OFF_SH 0x03
 
 #define ISZERO(x) (x == 0x27)
-#define ZERO_OFF 0x12
-#define ZERO_OFF_SH 0x01
+#define ZERO_OFF 0x9
+#define ZERO_OFF_SH 0x0
 
 #define SHIFT_MOD 0x02
  
