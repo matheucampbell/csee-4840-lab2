@@ -135,7 +135,7 @@ int main()
 					if (cursor > -length + 63)
 						cursor -= 64;
 				} else if (keyvalue[0] != (char)0) {
-						strcpy(sendbuf + length + cursor + 1, sendbuf + length + cursor);
+						strcpy(sendbuf, sendbuf + length + cursor);
 						sendbuf[length + cursor] =  keyvalue[0];
 				}
 			} else if (keyvalue[0] == '\n') {
@@ -143,7 +143,7 @@ int main()
 					sendbuf[0] = '\0';
 					input[0] = '\0';
 					fbclear(21, 22);
-			} else if (keyvalue[0] == (char)8) {
+			} else if (keyvalue[0] == (char)8) {				// The following part is necessary when sendbuf reaches to the end
 					sendbuf[length + cursor - 1] = '\0';
 			} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
