@@ -97,9 +97,9 @@ int main()
       }
       
       // Extract new presses from last packet and this packet
-	  update_pressed(new_press, packet.keycode, packet_l.keycode);
+	  update_pressed(new_press, (int*) packet.keycode, (int*) packet_l.keycode);
 	  // Change cursor position if arrows clicked
-	  update_position(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
+	  update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	  // Parse letters if letters pressed
 	  parse_letters(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
 	  // Check for backspace and enter
