@@ -9,7 +9,7 @@
 #define UP_ARROW 0x52
 #define DOWN_ARROW 0x51
 
-#define ISLETTER(x) (0x04 <= x <= 0x1d)
+#define ISLETTER(x) (0x04 <= x && x <= 0x1d)
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64
