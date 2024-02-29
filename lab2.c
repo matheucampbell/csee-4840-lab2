@@ -121,7 +121,7 @@ int main()
 					input[0] = '\0';
 					fbclear(21, 22);
 				} else if (keyvalue[0] == (char)8) {
-					sendbuf[length + cursor - 1] = '\0';
+					strcpy(sendbuf + length + cursor - 1, sendbuf + length + cursor);
 				} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
 						cursor++;
@@ -145,17 +145,17 @@ int main()
 			} else if (keyvalue[0] == (char)8) {
 					sendbuf[length + cursor - 1] = '\0';
 			} else if (keyvalue[0] == (char)17) {
-				if (cursor < 0)
-					cursor++;
+					if (cursor < 0)
+						cursor++;
 			} else if (keyvalue[0] == (char)18) {
-				if (cursor > -length)
-					cursor--;
+					if (cursor > -length)
+						cursor--;
 			} else if (keyvalue[0] == (char)19) {
-				if (cursor < -63)
-					cursor += 64;
+					if (cursor < -63)
+						cursor += 64;
 			} else if (keyvalue[0] == (char)20) {
-				if (cursor > -length + 63)
-					cursor -= 64;
+					if (cursor > -length + 63)
+						cursor -= 64;
 			} 
 
 			length = strlen(sendbuf);
