@@ -228,8 +228,7 @@ char key_trans(char *keyid)
 	char symbol;
 	int num[3]; 
 	int i = 0;
-	static int frstnum;
-	int temp = 0;
+	static int origin = 0, temp = 0;
 
 	char *token = strtok(keyid, " ");
 	while (token != NULL) {
@@ -237,10 +236,14 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	if (frstnum != num[1])
-		temp = frstnum = num[1];
-	else
-		temp = frstnum = num[2];
+	if (temp != num[1]) {
+		temp = num[1];
+		if (temp == origin)
+			temp = 0;
+		else
+			origin = temp;
+	} else
+		temp = num[2];
 	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
 	if (temp >= 4  && temp <= 29) {
 		if (num[0] == 2)
