@@ -56,7 +56,7 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	if (ISLETTER(keycode))
 		c = mods == SHIFT_MOD ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
 	else if (ISDIGIT(keycode))
-		c = mods == DIG_MOD ? keycode + DIG_OFF_SH: keycode + DIG_OFF;
+		c = mods == SHIFT_MOD ? keycode + DIG_OFF_SH: keycode + DIG_OFF;
 	else if (ISZERO(keycode))
 		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
 	
