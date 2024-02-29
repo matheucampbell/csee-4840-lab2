@@ -113,7 +113,7 @@ int main()
 			keyvalue[1] = '\0';
 			//fbputs(keystate, 21, 0);
       //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
-			
+			length = strlen(sendbuf);
 			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
