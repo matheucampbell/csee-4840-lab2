@@ -69,19 +69,19 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 }
 
 // Checks for backspace and enter
-void parse_entry(int keycode_a, int keycode_b, int mods, char* buf, int* x, int* y){
+void parse_entry(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos];
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*));
 	
 	// Backspace
-	if (keycode_a == 0x2a && bufpos > 0){
+	if (keycode == 0x2a && bufpos > 0){
 		printf("BACKSPACE received. Cursor at %d.\n", bufpos-1);
 		
 		strcpy(tmp, pp);
 		strcpy(pp-1, tmp);
 		
-		// update_position(LEFT_ARROW, 0, mods, buf, x, y);
+		update_position(LEFT_ARROW,  mods, buf, x, y);
 	}
 
 	free(tmp);
