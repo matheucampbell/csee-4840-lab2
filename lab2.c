@@ -51,6 +51,7 @@ int main()
   int transferred;
   char keystate[12];
 	char sendbuf[161] = "";
+	char input[161] = "";
 	char keyvalue[2];
 	int length, cursor = 0;
 
@@ -110,18 +111,19 @@ int main()
 	      packet.keycode[1]);
 			keyvalue[0] = key_trans(keystate);
 			keyvalue[1] = '\0';
-			//fbputs(keystate, 21, 0);
-      //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
-	    length = strlen(sendbuf);
-			if (length + 1 <= 64 * 2 + 32) {
+			// My code
+			//
+			int j;
+			length = strlen(sendbuf);
+			if (length < 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
 					sendbuf[0] = '\0';
+					input[0] = '\0';
+					cursor = 0;
 					fbclear(21, 22);
-					fbtype(21, 22, sendbuf);
-				} else if (keyvalue[0] == 8) {
-					sendbuf[length + cursor - 1] = '\0';
-					fbtype(21, 22, sendbuf);
+				} else if (keyvalue[0] == (char)8) {
+					strcpy(sendbuf + length + cursor - 1, sendbuf + length + cursor);
 				} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
 						cursor++;
@@ -129,21 +131,70 @@ int main()
 					if (cursor > -length)
 						cursor--;
 				} else if (keyvalue[0] == (char)19) {
-					if (cursor < 0)
+					if (cursor < -63)
 						cursor += 64;
 				} else if (keyvalue[0] == (char)20) {
-					if (cursor > -length)
+					if (cursor > -length + 63)
 						cursor -= 64;
-				} else {	
-					strcpy(sendbuf + length + cursor, keyvalue);
-					fbtype(21, 22, sendbuf);
+				} else if (keyvalue[0] != (char)0) {
+					for (j = length; j >= length + cursor; j--) {
+						sendbuf[j + 1] = sendbuf[j];
+					}		
+					sendbuf[length + cursor] =  keyvalue[0];
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
-					fbtype(21, 22, sendbuf);
 					sendbuf[0] = '\0';
+					input[0] = '\0';
+					cursor = 0;
 					fbclear(21, 22);
+			} else if (keyvalue[0] == (char)8) {				// The following part is necessary when sendbuf reaches to the end
+					strcpy(sendbuf + length + cursor - 1, sendbuf + length + cursor);
+			} else if (keyvalue[0] == (char)17) {
+					if (cursor < 0)
+						cursor++;
+			} else if (keyvalue[0] == (char)18) {
+					if (cursor > -length)
+						cursor--;
+			} else if (keyvalue[0] == (char)19) {
+					if (cursor < -63)
+						cursor += 64;
+			} else if (keyvalue[0] == (char)20) {
+					if (cursor > -length + 63)
+						cursor -= 64;
+			} 
+
+			length = strlen(sendbuf);
+			int num = cursor + length;	
+			int rw = 21 + num / 64;	
+			int cl = num % 64;
+			int up = 0;
+			if (length >= 128) {
+				if (num <= 64) {
+					up = 1;
+				} else if (num < 128) {
+					if (!up)
+						rw--;
+				} else {
+					up = 0;
+					rw--;
+				}
+				if (up) {
+					strncpy(input, sendbuf, 128);
+					input[128] = '\0';
+					fbtype(21, 22, input);
+				}	else {
+					strcpy(input, sendbuf + 64);
+					fbtype(21, 22, input);	
+				}
+			} else {
+				strncpy(input, sendbuf, 128);
+				input[128] = '\0';
+				fbtype(21, 22, input);
 			}
+			
+			fbcursor(rw, cl);
+
 			printf("%s\n", sendbuf);
 
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
@@ -179,7 +230,7 @@ char key_trans(char *keyid)
 	char symbol;
 	int num[3]; 
 	int i = 0;
-	static int temp = 0;
+	static int origin = 0, temp = 0;
 
 	char *token = strtok(keyid, " ");
 	while (token != NULL) {
@@ -187,13 +238,20 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	if (temp != num[1])
+	if (temp != num[1]) {
 		temp = num[1];
-	else
+		if (temp == origin)
+			temp = 0;
+		else
+			origin = temp;
+	} else
 		temp = num[2];
 	printf("KEYS:%d, %d, %d\n", num[0], num[1], num[2]);
 	if (temp >= 4  && temp <= 29) {
-		symbol = (char)(temp + 93);
+		if (num[0] == 2)
+			symbol = (char)(temp + 61);
+		else
+			symbol = (char)(temp + 93);
 	} else if (temp >= 30  && temp <= 38) {
 		symbol = (char)(temp + 19);
 	} else if (temp == 39) {
@@ -206,7 +264,18 @@ char key_trans(char *keyid)
 		symbol = 8;
 	} else if (temp >= 79 && temp <= 82) {
 		symbol = (char)(temp - 62);
-	} 
+	} else if (temp == 0) {
+		symbol = 0;
+	} else if (temp == 54){
+		symbol = ',';
+	}	else if (temp == 55) {
+		symbol = '.';
+	} else if (temp == 52) {
+		if (num[0] == 2)
+			symbol = '\"';
+		else
+			symbol = '\'';
+	}
 	
 	return symbol;
 }

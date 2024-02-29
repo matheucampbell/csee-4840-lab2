@@ -15,5 +15,6 @@ extern void fbclear(int, int);
 extern void fbscroll(int, int, int);
 extern void fbinput(int, int, char *);
 extern void fbtype(int, int, char *);
+extern void fbcursor(int, int);
 
 #endif
