@@ -6,16 +6,12 @@
 
 #define BUFFER_SIZE 128
 
-static int presscheck(int* presses, int target){
-	return (presses[0] == target || presses[1] == target);
-}
-
 // Updates new_press and stores newly pressed keys
 void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
 	*new_p = 0;
-	if (new[0] != old[0] && new[0] != old[1]) 
+	if (new[0] != 0 && new[0] != old[0] && new[0] != old[1]) 
 		*new_p = new[0];
-	if (new[1] != old[0] && new[1] != old[1]) 
+	if (new[1] != 0 && new[1] != old[0] && new[1] != old[1]) 
 		*new_p = new[1];
 }
 
