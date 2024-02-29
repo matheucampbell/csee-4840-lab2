@@ -34,10 +34,10 @@ void update_position(int pressed, int mods, char* buf, int* x, int* y){
 			(*y)--;
 		}
 	}
-	else if (pressed == UP_ARROW && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS < strlen(buf)){
+	else if (pressed == UP_ARROW && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS >= 0){
 		(*y)--;
 	}
-	else if (pressed == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS > 0){
+	else if (pressed == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS < strlen(buf)){
 		(*y)++;
 	}
 }
