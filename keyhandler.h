@@ -23,7 +23,7 @@
 #define ZERO_OFF 0x9
 #define ZERO_OFF_SH 0x0
 
-#define SHIFT_MOD 0x02
+#define SHIFT_MOD (0x02 || 0x02 || 0x22)
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64
