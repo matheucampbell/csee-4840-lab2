@@ -8,6 +8,9 @@
 #define LEFT_ARROW 0x50
 #define UP_ARROW 0x52
 #define DOWN_ARROW 0x51
+#define SPACE 0x20
+
+#define ISSPACE(x) (x == 0x2c)
 
 #define ISLETTER(x) (0x04 <= x && x <= 0x1d)
 #define LETT_OFF 0x5d

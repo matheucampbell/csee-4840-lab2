@@ -66,6 +66,8 @@ void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 		c = keycode + sh_digits[keycode - 30];
 	else if (ISZERO(keycode))
 		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
+	else if (ISSPACE(keycode))
+		c = SPACE;
 	else {
 		for (int i = 0; i < 11; i++){
 			if (keycode == sh_usb[i])
