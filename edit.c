@@ -41,7 +41,9 @@ int main()
   int err, col;
 
   struct usb_keyboard_packet packet;
-  struct usb_keyboard_packet packet_l;  // Last packet
+  struct usb_keyboard_packet packet_l = {.modifiers = 0,
+												     .reserved = 0,
+													  .keycode[6] = {0}};  // Last packet
   int transferred;
   char keystate[12];
   int new_press;  // Newly pressed non-mod keys
