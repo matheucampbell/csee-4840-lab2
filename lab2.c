@@ -237,7 +237,7 @@ char key_trans(char *keyid)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	if (first != num[1])
+	if (frstnum != num[1])
 		temp = frstnum = num[1];
 	else
 		temp = frstnum = num[2];
