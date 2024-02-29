@@ -48,7 +48,6 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*)); // Stores pp until the end for strcpy
 	char c;
-	printf("BUFPOS: %d", bufpos);
 	
 	if ((keycode | mods) == 0 || strlen(buf) == (SCREEN_ROWS-TYPE_ROW_MIN-1)*SCREEN_COLS)
 		return;
@@ -62,6 +61,8 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(tmp, pp);
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
+
+		printf("BUF: %s\n", buf[bufpos]);
 		
 		update_position(RIGHT_ARROW, 0, buf, x, y);
 	}
