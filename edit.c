@@ -41,8 +41,10 @@ int main()
   int err, col;
 
   struct usb_keyboard_packet packet;
+  struct usb_keyboard_packet packet_l;  // Last packet
   int transferred;
   char keystate[12];
+  int new_press[2];  // Currently pressed non-mod keys
 
   char* textbuf = (char*) malloc(BUFFER_SIZE * sizeof(char));
   textbuf[0] = '\0';
@@ -93,7 +95,9 @@ int main()
 	 		free(textbuf);
 			break;
       }
-	
+      
+      // Extract new presses from last packet and this packet
+	  update_pressed(new_press, packet.keycode, packet_l.keycode);
 	  // Change cursor position if arrows clicked
 	  update_position(packet.keycode[0], packet.keycode[1], packet.modifiers, textbuf, &curx, &cury);
 	  // Parse letters if letters pressed
@@ -103,9 +107,9 @@ int main()
 
      if (curx != lastx || cury != lasty){
 		fbputchar(' ', lasty, lastx, 255, 255, 255);
-	  }
+	 }
 
-     fbclear(21, 22);
+      fbclear(21, 22);
 	  fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
 	  fbputchar(cursor, cury, curx, 255, 255, 255);
 	}

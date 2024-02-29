@@ -5,10 +5,20 @@
 
 #define BUFFER_SIZE 128
 
+static int presscheck(int* presses, int target){
+	return (presses[0] == target || presses[1] == target);
+}
+
+// Updates new_press and stores newly pressed keys
+void update_pressed(int* new_p, int* new, int* old){
+	new_p[0] = (new[0] != old[0] && new[0] != old[1]) ? new[0] : 0;
+	new_p[1] = (new[1] != old[0] && new[1] != old[1]) ? new[1] : 0;
+}
+
 // Updates cursor upon receiving arrow key input
-void update_position(int keycode_a, int keycode_b, int mods, char* buf, int* x, int* y){
+void update_position(int* presses, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
-	if (keycode_a == RIGHT_ARROW && hpos < strlen(buf)-1){ 
+	if (presscheck(presses, RIGHT_ARROW) && hpos < strlen(buf)-1){ 
 		if (*x < SCREEN_COLS)
 			(*x)++;
 		if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
@@ -16,7 +26,7 @@ void update_position(int keycode_a, int keycode_b, int mods, char* buf, int* x, 
 			(*y)++;
 		}
 	}
-	else if (keycode_a == LEFT_ARROW && hpos > 0){
+	else if (presscheck(presses, LEFT_ARROW) && hpos > 0){
 		if (*x > 0)
 			(*x)--;
 		if (*x == 0 && (*y - TYPE_ROW_MIN) > 0){ // not in first row
@@ -24,10 +34,10 @@ void update_position(int keycode_a, int keycode_b, int mods, char* buf, int* x, 
 			(*y)--;
 		}
 	}
-	else if (keycode_a == UP_ARROW && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS < strlen(buf)){
+	else if (presscheck(presses, UP_ARROW) && *y > TYPE_ROW_MIN && hpos - SCREEN_COLS < strlen(buf)){
 		(*y)--;
 	}
-	else if (keycode_a == DOWN_ARROW && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS > 0){
+	else if (presscheck(presses, DOWN_ARROW) && *y < SCREEN_ROWS-2 && hpos + SCREEN_COLS > 0){
 		(*y)++;
 	}
 }
@@ -52,7 +62,7 @@ void parse_letters(int keycode_a, int keycode_b, int mods, char* buf, int* x, in
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
 		
-		update_position(RIGHT_ARROW, 0, mods, buf, x, y);
+		// update_position(RIGHT_ARROW, 0, mods, buf, x, y);
 	}
 	
 	free(tmp);
@@ -71,7 +81,7 @@ void parse_entry(int keycode_a, int keycode_b, int mods, char* buf, int* x, int*
 		strcpy(tmp, pp);
 		strcpy(pp-1, tmp);
 		
-		update_position(LEFT_ARROW, 0, mods, buf, x, y);
+		// update_position(LEFT_ARROW, 0, mods, buf, x, y);
 	}
 
 	free(tmp);
