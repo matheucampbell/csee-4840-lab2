@@ -136,7 +136,7 @@ int main()
 						cursor -= 64;
 				} else if (keyvalue[0] != (char)0) {
 						strcpy(sendbuf + length + cursor + 1, sendbuf + length + cursor);
-						strncpy(sendbuf + length + cursor, keyvalue, 1);
+						sendbuf[length + cursor] =  keyvalue[0];
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
