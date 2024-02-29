@@ -51,6 +51,7 @@ int main()
   int transferred;
   char keystate[12];
 	char sendbuf[161] = "";
+	char input[161] = "";
 	char keyvalue[2];
 	int length, cursor = 0;
 
@@ -112,16 +113,16 @@ int main()
 			keyvalue[1] = '\0';
 			//fbputs(keystate, 21, 0);
       //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
-	    length = strlen(sendbuf);
-			if (length + 1 <= 64 * 2 + 32) {
+			
+			if (strlen(sendbuf) + 1 <= 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
+					fbtype(21, 22, input, 1);
 					sendbuf[0] = '\0';
+					input[0] = '\0';
 					fbclear(21, 22);
-					fbtype(21, 22, sendbuf);
 				} else if (keyvalue[0] == 8) {
 					sendbuf[length + cursor - 1] = '\0';
-					fbtype(21, 22, sendbuf);
 				} else if (keyvalue[0] == (char)17) {
 					if (cursor < 0)
 						cursor++;
@@ -129,21 +130,46 @@ int main()
 					if (cursor > -length)
 						cursor--;
 				} else if (keyvalue[0] == (char)19) {
-					if (cursor < 0)
+					if (cursor < -63)
 						cursor += 64;
 				} else if (keyvalue[0] == (char)20) {
-					if (cursor > -length)
+					if (cursor > -length + 63)
 						cursor -= 64;
 				} else {	
 					strcpy(sendbuf + length + cursor, keyvalue);
-					fbtype(21, 22, sendbuf);
 				}
 			} else if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
-					fbtype(21, 22, sendbuf);
+					fbtype(21, 22, input, 1);
 					sendbuf[0] = '\0';
+					input[0] = '\0';
 					fbclear(21, 22);
 			}
+
+			length = strlen(sendbuf);
+			int num = cursor + length;	
+			int rw = 21 + num / 64;	
+			int cl = num % 64;
+			int up = 0;
+			if (length > 128) {
+				if (num <= 64) {
+					up = 1;
+				} else if (num <= 128) {
+					if (!up)
+						rw--;
+				} else {
+					strcpy(input, sendbuf + 128);
+					fbtype(21, 22, input, 1);	
+					up = 0;
+					rw--;
+				}
+			}
+			fbcursor(rw, cl);
+			
+			strncpy(input, sendbuf, 128);
+			input[128] = '\0';
+			fbtype(21, 22, input, 1);
+
 			printf("%s\n", sendbuf);
 
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */

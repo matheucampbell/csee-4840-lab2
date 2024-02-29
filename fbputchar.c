@@ -124,7 +124,7 @@ void fbclear(int start, int end)
 	}
 }
 
-// Scrolling screen
+// Scrolling down
 void fbscroll(int start, int end, int num)
 {
 	unsigned char *startp = framebuffer +
@@ -188,37 +188,37 @@ void fbinput(int start, int end, char *s)
 	}
 }
 
-void fbtype(int start, int end, char *s)
+void fbtype(int start, int end, char *s, int rst)
 {
-	int i;
-	char ins[161] = ""; 
+	int i; 
 	char outs[65] = "";
-	static int rows;
-	strcpy(ins, s);
-	rows = start;
-	while (strlen(ins) > 64) {
+	static int rows, flag = 1;
+	if (flag) {
+		rows = start;
+		flag = 0;
+	} else if (rst) {
+		flag = 1;
+	}
+	while (strlen(s) > 64) {
 		i = 64;
-		strncpy(outs, ins, i);
+		strncpy(outs, s, i);
 		outs[i] = '\0';
-		if (rows != end + 1) {
+		if (rows != end) {
 			fbclear(rows, rows);
 			fbputs(outs, rows, 0);
 			rows++;
 		} else {
 			fbscroll(start, end, 1);
-			fbclear(rows - 1, rows - 1);
-			fbputs(outs, rows - 1, 0);
 		}
-		strcpy(ins, ins + i + 1);
+		strcpy(s, s + i);
 	}
-	if (rows != end + 1) {
-		fbclear(rows, rows);
-		fbputs(ins, rows, 0);
-	} else {
-		fbscroll(start, end, 1);
-		fbclear(rows - 1, rows - 1);
-		fbputs(ins, rows - 1, 0);
-	}
+	fbclear(rows, rows);
+	fbputs(s, rows, 0);
+}
+
+void fbcursor(int row, int col) {
+	char c = '\0';
+	fbputchar(c, row, col, 255, 255, 255);
 }
 
 /* 8 X 16 console font from /lib/kbd/consolefonts/lat0-16.psfu.gz
