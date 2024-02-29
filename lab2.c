@@ -149,14 +149,14 @@ int main()
 			int rw = 21 + num / 64;	
 			int cl = num % 64;
 			int up = 0;
-			if (length > 128) {
-				if (num <= 64) {
+			if (length >= 128) {
+				if (num < 64) {
 					up = 1;
-				} else if (num <= 128) {
+				} else if (num < 128) {
 					if (!up)
 						rw--;
 				} else {
-					strcpy(input, sendbuf + 128);
+					strcpy(input, sendbuf + 64);
 					fbtype(21, 22, input);	
 					up = 0;
 					rw--;
