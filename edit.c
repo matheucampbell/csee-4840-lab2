@@ -48,6 +48,7 @@ int main()
 
   char* textbuf = (char*) malloc(BUFFER_SIZE * sizeof(char));
   textbuf[0] = '\0';
+  packet_l = {0, 0, 0};
   
   if ((err = fbopen()) != 0) {
     fprintf(stderr, "Error: Could not open framebuffer: %d\n", err);
@@ -112,7 +113,9 @@ int main()
       fbclear(21, 22);
 	   fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
 	   fbputchar(cursor, cury, curx, 255, 255, 255);
-	 }
+	   
+      packet_l = packet;
+    }
   }
 
   return 0;
