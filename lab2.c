@@ -111,10 +111,10 @@ int main()
 	      packet.keycode[1]);
 			keyvalue[0] = key_trans(keystate);
 			keyvalue[1] = '\0';
-			//fbputs(keystate, 21, 0);
-      //fbputchar(keyvalue[0], 22, 0, 255, 255, 255);
+			// My code
+			//
 			length = strlen(sendbuf);
-			if (length + 1 <= 64 * 2 + 32) {
+			if (length < 64 * 2 + 32) {
       	if (keyvalue[0] == '\n') {
 					write(sockfd, sendbuf, strlen(sendbuf));
 					sendbuf[0] = '\0';
@@ -134,7 +134,7 @@ int main()
 				} else if (keyvalue[0] == (char)20) {
 					if (cursor > -length + 63)
 						cursor -= 64;
-				} else {	
+				} else if (keyvalue[0] != (char)0) {	
 					strcpy(sendbuf + length + cursor, keyvalue);
 				}
 			} else if (keyvalue[0] == '\n') {
@@ -142,7 +142,21 @@ int main()
 					sendbuf[0] = '\0';
 					input[0] = '\0';
 					fbclear(21, 22);
-			}
+			} else if (keyvalue[0] == (char)8) {
+					sendbuf[length + cursor - 1] = '\0';
+			} else if (keyvalue[0] == (char)17) {
+				if (cursor < 0)
+					cursor++;
+			} else if (keyvalue[0] == (char)18) {
+				if (cursor > -length)
+					cursor--;
+			} else if (keyvalue[0] == (char)19) {
+				if (cursor < -63)
+					cursor += 64;
+			} else if (keyvalue[0] == (char)20) {
+				if (cursor > -length + 63)
+					cursor -= 64;
+			} 
 
 			length = strlen(sendbuf);
 			int num = cursor + length;	
@@ -235,6 +249,8 @@ char key_trans(char *keyid)
 		symbol = 8;
 	} else if (temp >= 79 && temp <= 82) {
 		symbol = (char)(temp - 62);
+	} else if (temp == 0) {
+		symbol = 0;
 	} 
 	
 	return symbol;
