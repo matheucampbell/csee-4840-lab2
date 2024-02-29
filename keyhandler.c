@@ -6,6 +6,11 @@
 
 #define BUFFER_SIZE 128
 
+// USB codes of symbols with shift variants (except letters and 0-9)
+int[] sh_usb[11] = [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56];
+int[] nsh_ascii[11] = [45, 61, 91, 93, 92, 59, 39, 96, 44, 46, 47];
+int[] sh_ascii[11] = [95, 43, 123, 125, 124, 58, 34, 126, 60, 62, 63];
+
 // Updates new_press and stores newly pressed keys
 void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
 	*new_p = 0;
@@ -43,7 +48,7 @@ void update_position(int pressed, int mods, char* buf, int* x, int* y){
 }
 
 // Updates text buffer upon receiving text, then moves cursor
-void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
+void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 	int bufpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	char* pp = &buf[bufpos]; // Partition pointer (where the cursor is)
 	char* tmp = (char*) malloc(BUFFER_SIZE*sizeof(char*)); // Stores pp until the end for strcpy
@@ -52,13 +57,18 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 	if ((keycode | mods) == 0 || strlen(buf) == (SCREEN_ROWS-TYPE_ROW_MIN-1)*SCREEN_COLS)
 		return;
 
-	// a through z (upper and lowercase) 
 	if (ISLETTER(keycode))
 		c = mods == SHIFT_MOD ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
-	else if (ISDIGIT(keycode))
-		c = mods == SHIFT_MOD ? keycode + DIG_OFF_SH: keycode + DIG_OFF;
+	else if (ISDIGIT(keycode) && mods != SHIFT_MOD)
+		c = keycode + DIG_OFF;
 	else if (ISZERO(keycode))
 		c = mods == SHIFT_MOD ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
+	else {
+		for (int i = 0; i < 11; i++){
+			if (keycode == sh_usb[i])
+				c = mods == SHIFT_MOD ? sh_ascii[i] : nsh_ascii[i];
+		}
+	}
 	
 	if (c != 0){	
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
@@ -66,8 +76,6 @@ void parse_letters(int keycode, int mods, char* buf, int* x, int* y){
 		strcpy(tmp, pp);
 		strcpy(pp+1, tmp);
 		buf[bufpos] = c;
-
-		printf("BUF: %s\n", buf);
 		
 		update_position(RIGHT_ARROW, 0, buf, x, y);
 	}

@@ -15,7 +15,6 @@
 
 #define ISDIGIT(x) (0x1e <= x && x <= 0x26)
 #define DIG_OFF 0x13
-#define DIG_OFF_SH 0x03
 
 #define ISZERO(x) (x == 0x27)
 #define ZERO_OFF 0x9
@@ -29,7 +28,7 @@
 
 void update_pressed(int*, uint8_t*, uint8_t*);
 void update_position(int, int, char*, int*, int*);
-void parse_letters(int, int, char*, int*, int*);
+void parse_symbols(int, int, char*, int*, int*);
 void parse_entry(int, int, char*, int*, int*);
 
 #endif
