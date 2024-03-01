@@ -13,8 +13,6 @@
 #define BACKSPACE 0x2a
 #define CAPS 0x39
 
-
-
 #define ISSPACE(x) (x == 0x2c)
 
 #define ISLETTER(x) (0x04 <= x && x <= 0x1d)
@@ -29,7 +27,7 @@
 #define ZERO_OFF_SH 0x02
 
 #define ISSHIFT(x) (x == 0x02 || x == 0x20 || x == 0x22)
-#define SHIFT_MOD 0x02;
+#define SHIFT_MOD 0x02
  
 #define SCREEN_ROWS 24
 #define SCREEN_COLS 64
