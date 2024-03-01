@@ -9,6 +9,7 @@
 #define UP_ARROW 0x52
 #define DOWN_ARROW 0x51
 #define SPACE 0x20
+#define ENTER 0x28
 
 #define ISSPACE(x) (x == 0x2c)
 

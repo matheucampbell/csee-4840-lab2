@@ -16,8 +16,6 @@
 #include <pthread.h>
 #include "keyhandler.h"
 
-#define BUFFER_SIZE 128
-
 /* Update SERVER_HOST to be the IP address of
  * the chat server you are connecting to
  */
