@@ -62,7 +62,7 @@ void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 		c = ISSHIFT(mods) ? keycode + LETT_OFF_SH: keycode + LETT_OFF;
 	else if (ISDIGIT(keycode) && !ISSHIFT(mods))
 		c = keycode + DIG_OFF;
-	else if (ISDIGIT(keycode) && !ISSHIFT(mods))
+	else if (ISDIGIT(keycode) && ISSHIFT(mods))
 		c = keycode + sh_digits[keycode - 30];
 	else if (ISZERO(keycode))
 		c = ISSHIFT(mods) ? keycode + ZERO_OFF_SH: keycode + ZERO_OFF;
