@@ -150,17 +150,15 @@ int main()
 		  fbtype(21, 22, textbuf);
 		  write(sockfd, textbuf, strlen(textbuf));
 		  curx = 0;
-		  cury = 0;
+		  cury = TYPE_ROW_MIN;
 		  textbuf[0] = '\0';
 		}
       
 		fbclear(21, 22);
 	   fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
-	   fbputchar(cursor, cury, curx, 255, 255, 255);
+	  	fbcursor(cury, curx);
 
-      packet_l = packet;
-
-		
+      packet_l = packet;	
     }
   }
   
