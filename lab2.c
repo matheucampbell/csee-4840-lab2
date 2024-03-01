@@ -135,8 +135,12 @@ int main()
 		  break;
       }
       
-		packet.modifiers = (caps && !ISSHIFT(packet.modifiers)) ? SHIFT_MOD : packet.modifiers;
-		packet.modifiers = (caps && ISSHIFT(packet.modifiers)) ? 0 : packet.modifiers;
+		if (caps){
+			if (ISSHIFT(packet.modifiers))
+				packet.modifiers = 0;
+			else
+				packet.modifiers = SHIFT_MOD;
+		}
 
       // Extract new presses from last packet and this packet
       update_pressed(&new_press, packet.keycode, packet_l.keycode);
