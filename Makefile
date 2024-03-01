@@ -19,7 +19,7 @@ lab2.tar.gz : $(TARFILES)
 	rm -rf lab2
 
 edit : $(EDITOBJECTS)
-	cc $(CFLAGS) -o edit $(EDITOBJECTS) -lusb-1.0
+	cc $(CFLAGS) -o edit $(EDITOBJECTS) -lusb-1.0 -pthread
 
 lab2.o : lab2.c fbputchar.h usbkeyboard.h
 edit.o : edit.c fbputchar.h usbkeyboard.h
