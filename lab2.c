@@ -47,6 +47,7 @@ char cursor = CURSOR;
 int lastx, lasty;
 int curx = 0;
 int cury = TYPE_ROW_MIN;
+int caps = 0;
 
 int main()
 {
@@ -134,12 +135,17 @@ int main()
 		  break;
       }
       
+		packet.modifiers = caps ? SHIFT_MOD : packet.modifiers;
+
       // Extract new presses from last packet and this packet
       update_pressed(&new_press, packet.keycode, packet_l.keycode);
 	   // Change cursor position if arrows clicked
 	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	   // Parse letters if letters pressed
 	   parse_symbols(new_press, packet.modifiers, textbuf, &curx, &cury);
+		
+		if (new_press = CAPS)
+			caps = ~caps;
 
       if (curx != lastx || cury != lasty){
 		  fbputchar(' ', lasty, lastx, 255, 255, 255);
