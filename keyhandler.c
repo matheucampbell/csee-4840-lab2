@@ -25,11 +25,9 @@ void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
 void update_position(int pressed, int mods, char* buf, int* x, int* y){
 	int hpos = (*y - TYPE_ROW_MIN)*SCREEN_COLS + *x;
 	if (pressed == RIGHT_ARROW && hpos <= strlen(buf) - 1){
-		if (*x < SCREEN_COLS){
-			printf("a\n");
+		if (*x < SCREEN_COLS - 1){
 			(*x)++;
-		} else if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
-			printf("b\n");
+		} else if (*x == SCREEN_COLS - 1 && *y < SCREEN_ROWS - 2){
 			*x = 0;
 			(*y)++;
 		}
