@@ -11,8 +11,10 @@
 #define SPACE 0x20
 #define ENTER 0x28
 #define BACKSPACE 0x2a
+#define TAB 0x09
 
 #define ISSPACE(x) (x == 0x2c)
+#define ISTAB(x) (x == 0x2b)
 
 #define ISLETTER(x) (0x04 <= x && x <= 0x1d)
 #define LETT_OFF 0x5d
