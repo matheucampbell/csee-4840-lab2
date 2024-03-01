@@ -7,7 +7,7 @@ TARFILES = Makefile lab2.c \
 	usbkeyboard.h usbkeyboard.c
 
 lab2 : $(OBJECTS)
-	cc $(CFLAGS) -o edit $(OBJECTS) -lusb-1.0 -pthread
+	cc $(CFLAGS) -o lab2 $(OBJECTS) -lusb-1.0 -pthread
 
 lab2.tar.gz : $(TARFILES)
 	rm -rf lab2
