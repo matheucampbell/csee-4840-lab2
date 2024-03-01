@@ -144,7 +144,7 @@ int main()
 	   // Parse letters if letters pressed
 	   parse_symbols(new_press, packet.modifiers, textbuf, &curx, &cury);
 		
-		if (new_press = CAPS)
+		if (new_press == CAPS)
 			caps = ~caps;
 
       if (curx != lastx || cury != lasty){
