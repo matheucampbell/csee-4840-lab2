@@ -22,7 +22,7 @@
 #define DIG_OFF 0x13
 
 #define ISZERO(x) (x == 0x27)
-#define ZERO_OFF 0x12
+#define ZERO_OFF 0x09
 #define ZERO_OFF_SH 0x02
 
 #define ISSHIFT(x) (x == 0x02 || x == 0x20 || x == 0x22)
