@@ -10,6 +10,7 @@
 #define DOWN_ARROW 0x51
 #define SPACE 0x20
 #define ENTER 0x28
+#define BACKSPACE 0x2a
 
 #define ISSPACE(x) (x == 0x2c)
 
@@ -33,7 +34,6 @@
 void update_pressed(int*, uint8_t*, uint8_t*);
 void update_position(int, int, char*, int*, int*);
 void parse_symbols(int, int, char*, int*, int*);
-void parse_entry(int, int, char*, int*, int*);
 
 #endif
 

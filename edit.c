@@ -140,23 +140,27 @@ int main()
 	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	   // Parse letters if letters pressed
 	   parse_symbols(new_press, packet.modifiers, textbuf, &curx, &cury);
-  	   // Check for backspace and enter
-	   parse_entry(new_press, packet.modifiers, textbuf, &curx, &cury);
 
       if (curx != lastx || cury != lasty){
 		  fbputchar(' ', lasty, lastx, 255, 255, 255);
 	   } 
-
-      fbclear(21, 22);
+		
+		// Checks for enter
+		if (new_press == ENTER){
+		  fbtype(21, 22, textbuf);
+		  write(sockfd, textbuf, strlen(textbuf));
+		  curx = 0;
+		  cury = 0;
+		  textbuf[0] = '\0';
+		}
+      
+		fbclear(21, 22);
 	   fbputlongs(textbuf, TYPE_ROW_MIN, 0, 2, SCREEN_COLS); 
 	   fbputchar(cursor, cury, curx, 255, 255, 255);
 
       packet_l = packet;
 
-		if (new_press == ENTER){
-		  fbtype(21, 22, textbuf);
-		  write(sockfd, textbuf, strlen(textbuf));
-		}
+		
     }
   }
   
