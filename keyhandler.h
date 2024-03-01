@@ -23,7 +23,7 @@
 
 #define ISZERO(x) (x == 0x27)
 #define ZERO_OFF 0x9
-#define ZERO_OFF_SH 0x0
+#define ZERO_OFF_SH 0x02
 
 #define ISSHIFT(x) (x == 0x02 || x == 0x20 || x == 0x22)
  
