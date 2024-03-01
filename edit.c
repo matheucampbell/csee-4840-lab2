@@ -77,7 +77,7 @@ int main()
   for (int col=0; col<SCREEN_COLS; col++)
     fbputchar('-', TYPE_ROW_MIN-1, col, 255, 255, 255);
 
-  fbputchar(cursor, TYPE_ROW_MIN, 0, 255, 255, 255);
+  fbcursor(TYPE_ROW_MIN, 0);
 
   /* Draw rows of asterisks across the top and bottom of the screen */
   for (col = 0 ; col < 64 ; col++) {
