@@ -113,11 +113,7 @@ int main()
   }
 
   /* Start the network thread */
-  pthread_create(&network_thread, NULL, network_thread_f, NULL);  /* Create a TCP communications socket */
-  if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0 ) {
-    fprintf(stderr, "Error: Could not create socket\n");
-    exit(1);
-  }
+  pthread_create(&network_thread, NULL, network_thread_f, NULL);   
   
   /* Look for and handle keypresses */
   for (;;) {
@@ -132,7 +128,7 @@ int main()
       sprintf(keystate, "%02x %02x %02x", packet.modifiers, packet.keycode[0],
 	      packet.keycode[1]);
       printf("%s\n", keystate);
-      fbputs(keystate, 6, 0);
+      // fbputs(keystate, 6, 0);
       if (packet.keycode[0] == 0x29) { /* ESC pressed? */
 	 	  free(textbuf);
 		  break;
@@ -140,7 +136,6 @@ int main()
       
       // Extract new presses from last packet and this packet
       update_pressed(&new_press, packet.keycode, packet_l.keycode);
-
 	   // Change cursor position if arrows clicked
 	   update_position(new_press, packet.modifiers, textbuf, &curx, &cury);
 	   // Parse letters if letters pressed
