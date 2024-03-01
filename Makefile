@@ -1,6 +1,6 @@
 CFLAGS = -Wall
 
-OBJECTS = edit.o keyhandler.o fbputchar.o usbkeyboard.o
+OBJECTS = lab2.o keyhandler.o fbputchar.o usbkeyboard.o
 
 TARFILES = Makefile lab2.c \
 	fbputchar.h fbputchar.c \
@@ -23,4 +23,4 @@ usbkeyboard.o : usbkeyboard.c usbkeyboard.h
 
 .PHONY : clean
 clean :
-	rm -rf *.o lab2 edit
+	rm -rf *.o lab2 
