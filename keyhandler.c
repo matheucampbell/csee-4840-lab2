@@ -75,7 +75,7 @@ void parse_symbols(int keycode, int mods, char* buf, int* x, int* y){
 		}
 	}
 	
-	if (c != 0){	
+	if (c != 0 && strlen(buf) < SCREEN_COLS*2 - 1){	
 		printf("%c received. Cursor now at %d.\n", c, bufpos+1);
 		// Insert new letter at cursor position
 		strcpy(tmp, pp);
