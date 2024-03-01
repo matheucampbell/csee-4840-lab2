@@ -10,9 +10,11 @@
 extern int fbopen(void);
 extern void fbputchar(char, int, int, int, int, int);
 extern void fbputs(const char *, int, int);
+extern void fbputlongs(const char *, int, int, int, int);
 extern void fbclear(int, int);
 extern void fbscroll(int, int, int);
 extern void fbinput(int, int, char *);
 extern void fbtype(int, int, char *);
+extern void fbcursor(int, int);
 
 #endif
