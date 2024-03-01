@@ -28,6 +28,7 @@ void update_position(int pressed, int mods, char* buf, int* x, int* y){
 		if (*x < SCREEN_COLS)
 			(*x)++;
 		if (*x == SCREEN_COLS && *y < SCREEN_ROWS - 2){
+			printf("here");
 			*x = 0;
 			(*y)++;
 		}
