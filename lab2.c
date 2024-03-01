@@ -147,8 +147,8 @@ int main()
 		
 		// Checks for enter
 		if (new_press == ENTER){
-		  fbtype(21, 22, textbuf);
 		  write(sockfd, textbuf, strlen(textbuf));
+		  fbtype(21, 22, textbuf);
 		  curx = 0;
 		  cury = TYPE_ROW_MIN;
 		  textbuf[0] = '\0';
