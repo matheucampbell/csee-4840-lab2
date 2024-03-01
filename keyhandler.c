@@ -10,7 +10,7 @@
 int sh_usb[11] = {45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56};
 int nsh_ascii[11] = {45, 61, 91, 93, 92, 59, 39, 96, 44, 46, 47}; // non-shifted equiv
 int sh_ascii[11] = {95, 43, 123, 125, 124, 58, 34, 126, 60, 62, 63}; // shifted equiv
-int sh_digits[11] = {3, 33, 3, 2, 4, 59, 2, 5, 2, 2};  // offset for shifted digits
+int sh_digits[11] = {3, 33, 3, 3, 3, 59, 2, 5, 2, 2};  // offset for shifted digits
 
 // Updates new_press and stores newly pressed keys
 void update_pressed(int* new_p, uint8_t* new, uint8_t* old){
