@@ -164,7 +164,7 @@ void fbscroll(int start, int end, int num)
 void fbinput(int start, int end, char *s)
 {
 	int i; 
-	char outs[64] = "";
+	char outs[65] = "";
 	static int rows, rst = 0;
 	if (!rst) {
 		rows = start;
