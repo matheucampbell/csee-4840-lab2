@@ -2,7 +2,7 @@
  *
  * CSEE 4840 Lab 2 for 2019
  *
- * Name/UNI: Please Changeto Yourname (pcy2301)
+ * Name/UNI: Matheu Campbell (mgc2171), Peiran Wang (pw2593) 
  */
 
 #include "fbputchar.h"
